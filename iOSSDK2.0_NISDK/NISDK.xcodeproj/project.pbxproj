@@ -1,0 +1,802 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		23D5B5C41A3E865100481884 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 23D5B5C51A3E865100481884 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				23D5B5CA1A3E869600481884 /* MultiPlatform Build */,
+			);
+			dependencies = (
+				23D5B5C91A3E867300481884 /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		234C4ECE1A2C035700093438 /* NISDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 234C4ECD1A2C035700093438 /* NISDK.h */; };
+		234C4ED61A2C035700093438 /* libNISDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 234C4ECA1A2C035700093438 /* libNISDK.a */; };
+		234C4EE51A2C03E500093438 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234C4EE41A2C03E500093438 /* UIKit.framework */; };
+		234C4EE71A2C048E00093438 /* NISDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4ECD1A2C035700093438 /* NISDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F341A2C050000093438 /* configure.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4EFA1A2C050000093438 /* configure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F351A2C050000093438 /* NJCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4EFB1A2C050000093438 /* NJCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F361A2C050000093438 /* NJCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4EFC1A2C050000093438 /* NJCommon.m */; };
+		234C4F371A2C050000093438 /* NJNotebookIdStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4EFE1A2C050000093438 /* NJNotebookIdStore.h */; };
+		234C4F381A2C050000093438 /* NJNotebookIdStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4EFF1A2C050000093438 /* NJNotebookIdStore.m */; };
+		234C4F411A2C050000093438 /* NJVoiceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F081A2C050000093438 /* NJVoiceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F421A2C050000093438 /* NJVoiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F091A2C050000093438 /* NJVoiceManager.m */; };
+		234C4F431A2C050000093438 /* NJNotebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F0B1A2C050000093438 /* NJNotebook.h */; };
+		234C4F441A2C050000093438 /* NJNotebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F0C1A2C050000093438 /* NJNotebook.m */; };
+		234C4F451A2C050000093438 /* NJNotebookDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F0D1A2C050000093438 /* NJNotebookDocument.h */; };
+		234C4F461A2C050000093438 /* NJNotebookDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F0E1A2C050000093438 /* NJNotebookDocument.m */; };
+		234C4F471A2C050000093438 /* NJNotebookInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F0F1A2C050000093438 /* NJNotebookInfo.h */; };
+		234C4F481A2C050000093438 /* NJNotebookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F101A2C050000093438 /* NJNotebookInfo.m */; };
+		234C4F491A2C050000093438 /* NJNotebookPaperInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F111A2C050000093438 /* NJNotebookPaperInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F4A1A2C050000093438 /* NJNotebookPaperInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F121A2C050000093438 /* NJNotebookPaperInfo.m */; };
+		234C4F4D1A2C050000093438 /* NJLinearFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F181A2C050000093438 /* NJLinearFilter.h */; };
+		234C4F4E1A2C050000093438 /* NJLinearFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F191A2C050000093438 /* NJLinearFilter.m */; };
+		234C4F4F1A2C050000093438 /* NJMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F1A1A2C050000093438 /* NJMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F501A2C050000093438 /* NJMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F1B1A2C050000093438 /* NJMedia.m */; };
+		234C4F511A2C050000093438 /* NJNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F1C1A2C050000093438 /* NJNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F521A2C050000093438 /* NJNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F1D1A2C050000093438 /* NJNode.m */; };
+		234C4F571A2C050000093438 /* NJTransformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F221A2C050000093438 /* NJTransformation.h */; };
+		234C4F581A2C050000093438 /* NJTransformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F231A2C050000093438 /* NJTransformation.m */; };
+		234C4F591A2C050000093438 /* NJVoiceMemo.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F241A2C050000093438 /* NJVoiceMemo.h */; };
+		234C4F5A1A2C050000093438 /* NJVoiceMemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F251A2C050000093438 /* NJVoiceMemo.m */; };
+		234C4F5B1A2C050000093438 /* PDFPageConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F271A2C050000093438 /* PDFPageConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F5C1A2C050000093438 /* PDFPageConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F281A2C050000093438 /* PDFPageConverter.m */; };
+		234C4F5D1A2C050000093438 /* PDFPageRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F291A2C050000093438 /* PDFPageRenderer.h */; };
+		234C4F5E1A2C050000093438 /* PDFPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F2A1A2C050000093438 /* PDFPageRenderer.m */; };
+		234C4F641A2C050000093438 /* MyFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 234C4F321A2C050000093438 /* MyFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		234C4F651A2C050000093438 /* MyFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 234C4F331A2C050000093438 /* MyFunctions.m */; };
+		238009971E7B8A6F00040B1C /* libZipZap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 238009961E7B8A6F00040B1C /* libZipZap.a */; };
+		2380099E1E7B8AAF00040B1C /* NPNotebookInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 238009981E7B8AAF00040B1C /* NPNotebookInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2380099F1E7B8AAF00040B1C /* NPNotebookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 238009991E7B8AAF00040B1C /* NPNotebookInfo.m */; };
+		238009A01E7B8AAF00040B1C /* NPPaperInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2380099A1E7B8AAF00040B1C /* NPPaperInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		238009A11E7B8AAF00040B1C /* NPPaperInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2380099B1E7B8AAF00040B1C /* NPPaperInfo.m */; };
+		238009A21E7B8AAF00040B1C /* NPPUIInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2380099C1E7B8AAF00040B1C /* NPPUIInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		238009A31E7B8AAF00040B1C /* NPPUIInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2380099D1E7B8AAF00040B1C /* NPPUIInfo.m */; };
+		238009A61E7B8AE100040B1C /* NPPaperManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 238009A41E7B8AE100040B1C /* NPPaperManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		238009A71E7B8AE100040B1C /* NPPaperManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 238009A51E7B8AE100040B1C /* NPPaperManager.m */; };
+		238009AA1E7B8AFD00040B1C /* NJXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 238009A81E7B8AFD00040B1C /* NJXMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		238009AB1E7B8AFD00040B1C /* NJXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 238009A91E7B8AFD00040B1C /* NJXMLParser.m */; };
+		23BFEC8C1A351BCA0021EAB0 /* NeoPenService.h in Headers */ = {isa = PBXBuildFile; fileRef = 23BFEC871A351BCA0021EAB0 /* NeoPenService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23BFEC8D1A351BCA0021EAB0 /* NJPenCommManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 23BFEC881A351BCA0021EAB0 /* NJPenCommManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23BFEC8E1A351BCA0021EAB0 /* NJPenCommManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BFEC891A351BCA0021EAB0 /* NJPenCommManager.m */; };
+		23BFEC8F1A351BCA0021EAB0 /* NJPenCommParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 23BFEC8A1A351BCA0021EAB0 /* NJPenCommParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23BFEC901A351BCA0021EAB0 /* NJPenCommParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BFEC8B1A351BCA0021EAB0 /* NJPenCommParser.m */; };
+		23BFECCF1A35299F0021EAB0 /* KeychainItemWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 23BFECCD1A35299F0021EAB0 /* KeychainItemWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23BFECD01A35299F0021EAB0 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BFECCE1A35299F0021EAB0 /* KeychainItemWrapper.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		234C4ED71A2C035700093438 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 234C4EC21A2C035700093438 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 234C4EC91A2C035700093438;
+			remoteInfo = NISDK;
+		};
+		23D5B5C81A3E867300481884 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 234C4EC21A2C035700093438 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 234C4EC91A2C035700093438;
+			remoteInfo = NISDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		234C4EC81A2C035700093438 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				234C4ECE1A2C035700093438 /* NISDK.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		234C4ECA1A2C035700093438 /* libNISDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNISDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		234C4ECD1A2C035700093438 /* NISDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NISDK.h; sourceTree = "<group>"; };
+		234C4ED51A2C035700093438 /* NISDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NISDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		234C4EDB1A2C035700093438 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		234C4EE41A2C03E500093438 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		234C4EFA1A2C050000093438 /* configure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configure.h; sourceTree = "<group>"; };
+		234C4EFB1A2C050000093438 /* NJCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJCommon.h; sourceTree = "<group>"; };
+		234C4EFC1A2C050000093438 /* NJCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJCommon.m; sourceTree = "<group>"; };
+		234C4EFE1A2C050000093438 /* NJNotebookIdStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNotebookIdStore.h; sourceTree = "<group>"; };
+		234C4EFF1A2C050000093438 /* NJNotebookIdStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNotebookIdStore.m; sourceTree = "<group>"; };
+		234C4F081A2C050000093438 /* NJVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJVoiceManager.h; sourceTree = "<group>"; };
+		234C4F091A2C050000093438 /* NJVoiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJVoiceManager.m; sourceTree = "<group>"; };
+		234C4F0B1A2C050000093438 /* NJNotebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNotebook.h; sourceTree = "<group>"; };
+		234C4F0C1A2C050000093438 /* NJNotebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNotebook.m; sourceTree = "<group>"; };
+		234C4F0D1A2C050000093438 /* NJNotebookDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNotebookDocument.h; sourceTree = "<group>"; };
+		234C4F0E1A2C050000093438 /* NJNotebookDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNotebookDocument.m; sourceTree = "<group>"; };
+		234C4F0F1A2C050000093438 /* NJNotebookInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNotebookInfo.h; sourceTree = "<group>"; };
+		234C4F101A2C050000093438 /* NJNotebookInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNotebookInfo.m; sourceTree = "<group>"; };
+		234C4F111A2C050000093438 /* NJNotebookPaperInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNotebookPaperInfo.h; sourceTree = "<group>"; };
+		234C4F121A2C050000093438 /* NJNotebookPaperInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNotebookPaperInfo.m; sourceTree = "<group>"; };
+		234C4F181A2C050000093438 /* NJLinearFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJLinearFilter.h; sourceTree = "<group>"; };
+		234C4F191A2C050000093438 /* NJLinearFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJLinearFilter.m; sourceTree = "<group>"; };
+		234C4F1A1A2C050000093438 /* NJMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJMedia.h; sourceTree = "<group>"; };
+		234C4F1B1A2C050000093438 /* NJMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJMedia.m; sourceTree = "<group>"; };
+		234C4F1C1A2C050000093438 /* NJNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJNode.h; sourceTree = "<group>"; };
+		234C4F1D1A2C050000093438 /* NJNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJNode.m; sourceTree = "<group>"; };
+		234C4F221A2C050000093438 /* NJTransformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJTransformation.h; sourceTree = "<group>"; };
+		234C4F231A2C050000093438 /* NJTransformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJTransformation.m; sourceTree = "<group>"; };
+		234C4F241A2C050000093438 /* NJVoiceMemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJVoiceMemo.h; sourceTree = "<group>"; };
+		234C4F251A2C050000093438 /* NJVoiceMemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJVoiceMemo.m; sourceTree = "<group>"; };
+		234C4F271A2C050000093438 /* PDFPageConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFPageConverter.h; sourceTree = "<group>"; };
+		234C4F281A2C050000093438 /* PDFPageConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFPageConverter.m; sourceTree = "<group>"; };
+		234C4F291A2C050000093438 /* PDFPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFPageRenderer.h; sourceTree = "<group>"; };
+		234C4F2A1A2C050000093438 /* PDFPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFPageRenderer.m; sourceTree = "<group>"; };
+		234C4F321A2C050000093438 /* MyFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFunctions.h; sourceTree = "<group>"; };
+		234C4F331A2C050000093438 /* MyFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFunctions.m; sourceTree = "<group>"; };
+		234C4F661A2C077400093438 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		238009961E7B8A6F00040B1C /* libZipZap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZipZap.a; path = lib/libZipZap.a; sourceTree = "<group>"; };
+		238009981E7B8AAF00040B1C /* NPNotebookInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPNotebookInfo.h; path = penComm/NPNotebookInfo.h; sourceTree = "<group>"; };
+		238009991E7B8AAF00040B1C /* NPNotebookInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPNotebookInfo.m; path = penComm/NPNotebookInfo.m; sourceTree = "<group>"; };
+		2380099A1E7B8AAF00040B1C /* NPPaperInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPPaperInfo.h; path = penComm/NPPaperInfo.h; sourceTree = "<group>"; };
+		2380099B1E7B8AAF00040B1C /* NPPaperInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPPaperInfo.m; path = penComm/NPPaperInfo.m; sourceTree = "<group>"; };
+		2380099C1E7B8AAF00040B1C /* NPPUIInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPPUIInfo.h; path = penComm/NPPUIInfo.h; sourceTree = "<group>"; };
+		2380099D1E7B8AAF00040B1C /* NPPUIInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPPUIInfo.m; path = penComm/NPPUIInfo.m; sourceTree = "<group>"; };
+		238009A41E7B8AE100040B1C /* NPPaperManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPPaperManager.h; path = penComm/NPPaperManager.h; sourceTree = "<group>"; };
+		238009A51E7B8AE100040B1C /* NPPaperManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPPaperManager.m; path = penComm/NPPaperManager.m; sourceTree = "<group>"; };
+		238009A81E7B8AFD00040B1C /* NJXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJXMLParser.h; sourceTree = "<group>"; };
+		238009A91E7B8AFD00040B1C /* NJXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJXMLParser.m; sourceTree = "<group>"; };
+		23BFEC871A351BCA0021EAB0 /* NeoPenService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NeoPenService.h; path = penComm/NeoPenService.h; sourceTree = "<group>"; };
+		23BFEC881A351BCA0021EAB0 /* NJPenCommManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJPenCommManager.h; path = penComm/NJPenCommManager.h; sourceTree = "<group>"; };
+		23BFEC891A351BCA0021EAB0 /* NJPenCommManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJPenCommManager.m; path = penComm/NJPenCommManager.m; sourceTree = "<group>"; };
+		23BFEC8A1A351BCA0021EAB0 /* NJPenCommParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJPenCommParser.h; path = penComm/NJPenCommParser.h; sourceTree = "<group>"; };
+		23BFEC8B1A351BCA0021EAB0 /* NJPenCommParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJPenCommParser.m; path = penComm/NJPenCommParser.m; sourceTree = "<group>"; };
+		23BFECCD1A35299F0021EAB0 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		23BFECCE1A35299F0021EAB0 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		23CD8D061A36A29F00677BAF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		23CD8D141A36D10500677BAF /* NEO1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = NEO1.zip; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		234C4EC71A2C035700093438 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				238009971E7B8A6F00040B1C /* libZipZap.a in Frameworks */,
+				234C4EE51A2C03E500093438 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		234C4ED21A2C035700093438 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				234C4ED61A2C035700093438 /* libNISDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		233599BF1D52D2E90074C244 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				238009981E7B8AAF00040B1C /* NPNotebookInfo.h */,
+				238009991E7B8AAF00040B1C /* NPNotebookInfo.m */,
+				2380099A1E7B8AAF00040B1C /* NPPaperInfo.h */,
+				2380099B1E7B8AAF00040B1C /* NPPaperInfo.m */,
+				2380099C1E7B8AAF00040B1C /* NPPUIInfo.h */,
+				2380099D1E7B8AAF00040B1C /* NPPUIInfo.m */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		234C4EC11A2C035700093438 = {
+			isa = PBXGroup;
+			children = (
+				238009961E7B8A6F00040B1C /* libZipZap.a */,
+				23CD8D061A36A29F00677BAF /* libz.dylib */,
+				234C4F661A2C077400093438 /* Foundation.framework */,
+				234C4EE41A2C03E500093438 /* UIKit.framework */,
+				234C4ECC1A2C035700093438 /* NISDK */,
+				234C4ED91A2C035700093438 /* NISDKTests */,
+				234C4ECB1A2C035700093438 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		234C4ECB1A2C035700093438 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				234C4ECA1A2C035700093438 /* libNISDK.a */,
+				234C4ED51A2C035700093438 /* NISDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		234C4ECC1A2C035700093438 /* NISDK */ = {
+			isa = PBXGroup;
+			children = (
+				23CD8D141A36D10500677BAF /* NEO1.zip */,
+				234C4EE81A2C050000093438 /* n2base */,
+				234C4ECD1A2C035700093438 /* NISDK.h */,
+			);
+			path = NISDK;
+			sourceTree = "<group>";
+		};
+		234C4ED91A2C035700093438 /* NISDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				234C4EDA1A2C035700093438 /* Supporting Files */,
+			);
+			path = NISDKTests;
+			sourceTree = "<group>";
+		};
+		234C4EDA1A2C035700093438 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				234C4EDB1A2C035700093438 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		234C4EE81A2C050000093438 /* n2base */ = {
+			isa = PBXGroup;
+			children = (
+				23BFEC7B1A351BA00021EAB0 /* penComm */,
+				234C4EF91A2C050000093438 /* common */,
+				234C4EFD1A2C050000093438 /* managers */,
+				234C4F0A1A2C050000093438 /* models */,
+				234C4F171A2C050000093438 /* pageData */,
+				234C4F261A2C050000093438 /* PDFPageConverter */,
+				234C4F311A2C050000093438 /* utils */,
+			);
+			path = n2base;
+			sourceTree = "<group>";
+		};
+		234C4EF91A2C050000093438 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				234C4EFA1A2C050000093438 /* configure.h */,
+				234C4EFB1A2C050000093438 /* NJCommon.h */,
+				234C4EFC1A2C050000093438 /* NJCommon.m */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		234C4EFD1A2C050000093438 /* managers */ = {
+			isa = PBXGroup;
+			children = (
+				234C4EFE1A2C050000093438 /* NJNotebookIdStore.h */,
+				234C4EFF1A2C050000093438 /* NJNotebookIdStore.m */,
+				234C4F081A2C050000093438 /* NJVoiceManager.h */,
+				234C4F091A2C050000093438 /* NJVoiceManager.m */,
+			);
+			path = managers;
+			sourceTree = "<group>";
+		};
+		234C4F0A1A2C050000093438 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				234C4F0B1A2C050000093438 /* NJNotebook.h */,
+				234C4F0C1A2C050000093438 /* NJNotebook.m */,
+				234C4F0D1A2C050000093438 /* NJNotebookDocument.h */,
+				234C4F0E1A2C050000093438 /* NJNotebookDocument.m */,
+				234C4F0F1A2C050000093438 /* NJNotebookInfo.h */,
+				234C4F101A2C050000093438 /* NJNotebookInfo.m */,
+				234C4F111A2C050000093438 /* NJNotebookPaperInfo.h */,
+				234C4F121A2C050000093438 /* NJNotebookPaperInfo.m */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		234C4F171A2C050000093438 /* pageData */ = {
+			isa = PBXGroup;
+			children = (
+				234C4F181A2C050000093438 /* NJLinearFilter.h */,
+				234C4F191A2C050000093438 /* NJLinearFilter.m */,
+				234C4F1A1A2C050000093438 /* NJMedia.h */,
+				234C4F1B1A2C050000093438 /* NJMedia.m */,
+				234C4F1C1A2C050000093438 /* NJNode.h */,
+				234C4F1D1A2C050000093438 /* NJNode.m */,
+				234C4F221A2C050000093438 /* NJTransformation.h */,
+				234C4F231A2C050000093438 /* NJTransformation.m */,
+				234C4F241A2C050000093438 /* NJVoiceMemo.h */,
+				234C4F251A2C050000093438 /* NJVoiceMemo.m */,
+			);
+			path = pageData;
+			sourceTree = "<group>";
+		};
+		234C4F261A2C050000093438 /* PDFPageConverter */ = {
+			isa = PBXGroup;
+			children = (
+				234C4F271A2C050000093438 /* PDFPageConverter.h */,
+				234C4F281A2C050000093438 /* PDFPageConverter.m */,
+				234C4F291A2C050000093438 /* PDFPageRenderer.h */,
+				234C4F2A1A2C050000093438 /* PDFPageRenderer.m */,
+			);
+			path = PDFPageConverter;
+			sourceTree = "<group>";
+		};
+		234C4F311A2C050000093438 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				238009A81E7B8AFD00040B1C /* NJXMLParser.h */,
+				238009A91E7B8AFD00040B1C /* NJXMLParser.m */,
+				23BFECCD1A35299F0021EAB0 /* KeychainItemWrapper.h */,
+				23BFECCE1A35299F0021EAB0 /* KeychainItemWrapper.m */,
+				234C4F321A2C050000093438 /* MyFunctions.h */,
+				234C4F331A2C050000093438 /* MyFunctions.m */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		23BFEC7B1A351BA00021EAB0 /* penComm */ = {
+			isa = PBXGroup;
+			children = (
+				233599BF1D52D2E90074C244 /* models */,
+				23BFEC871A351BCA0021EAB0 /* NeoPenService.h */,
+				23BFEC881A351BCA0021EAB0 /* NJPenCommManager.h */,
+				23BFEC891A351BCA0021EAB0 /* NJPenCommManager.m */,
+				23BFEC8A1A351BCA0021EAB0 /* NJPenCommParser.h */,
+				23BFEC8B1A351BCA0021EAB0 /* NJPenCommParser.m */,
+				238009A41E7B8AE100040B1C /* NPPaperManager.h */,
+				238009A51E7B8AE100040B1C /* NPPaperManager.m */,
+			);
+			name = penComm;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		234C4EE61A2C047B00093438 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				234C4F511A2C050000093438 /* NJNode.h in Headers */,
+				234C4F4F1A2C050000093438 /* NJMedia.h in Headers */,
+				234C4F351A2C050000093438 /* NJCommon.h in Headers */,
+				234C4F341A2C050000093438 /* configure.h in Headers */,
+				234C4F491A2C050000093438 /* NJNotebookPaperInfo.h in Headers */,
+				23BFEC8F1A351BCA0021EAB0 /* NJPenCommParser.h in Headers */,
+				234C4F411A2C050000093438 /* NJVoiceManager.h in Headers */,
+				23BFEC8D1A351BCA0021EAB0 /* NJPenCommManager.h in Headers */,
+				23BFECCF1A35299F0021EAB0 /* KeychainItemWrapper.h in Headers */,
+				234C4F641A2C050000093438 /* MyFunctions.h in Headers */,
+				238009AA1E7B8AFD00040B1C /* NJXMLParser.h in Headers */,
+				23BFEC8C1A351BCA0021EAB0 /* NeoPenService.h in Headers */,
+				238009A61E7B8AE100040B1C /* NPPaperManager.h in Headers */,
+				238009A21E7B8AAF00040B1C /* NPPUIInfo.h in Headers */,
+				2380099E1E7B8AAF00040B1C /* NPNotebookInfo.h in Headers */,
+				238009A01E7B8AAF00040B1C /* NPPaperInfo.h in Headers */,
+				234C4F5B1A2C050000093438 /* PDFPageConverter.h in Headers */,
+				234C4F4D1A2C050000093438 /* NJLinearFilter.h in Headers */,
+				234C4F591A2C050000093438 /* NJVoiceMemo.h in Headers */,
+				234C4F371A2C050000093438 /* NJNotebookIdStore.h in Headers */,
+				234C4F451A2C050000093438 /* NJNotebookDocument.h in Headers */,
+				234C4F5D1A2C050000093438 /* PDFPageRenderer.h in Headers */,
+				234C4EE71A2C048E00093438 /* NISDK.h in Headers */,
+				234C4F431A2C050000093438 /* NJNotebook.h in Headers */,
+				234C4F471A2C050000093438 /* NJNotebookInfo.h in Headers */,
+				234C4F571A2C050000093438 /* NJTransformation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		234C4EC91A2C035700093438 /* NISDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 234C4EDE1A2C035700093438 /* Build configuration list for PBXNativeTarget "NISDK" */;
+			buildPhases = (
+				234C4EC61A2C035700093438 /* Sources */,
+				234C4EC71A2C035700093438 /* Frameworks */,
+				234C4EC81A2C035700093438 /* CopyFiles */,
+				234C4EE61A2C047B00093438 /* Headers */,
+				23D5B5C31A3E608B00481884 /* Build Framework */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NISDK;
+			productName = NISDK;
+			productReference = 234C4ECA1A2C035700093438 /* libNISDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		234C4ED41A2C035700093438 /* NISDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 234C4EE11A2C035700093438 /* Build configuration list for PBXNativeTarget "NISDKTests" */;
+			buildPhases = (
+				234C4ED11A2C035700093438 /* Sources */,
+				234C4ED21A2C035700093438 /* Frameworks */,
+				234C4ED31A2C035700093438 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				234C4ED81A2C035700093438 /* PBXTargetDependency */,
+			);
+			name = NISDKTests;
+			productName = NISDKTests;
+			productReference = 234C4ED51A2C035700093438 /* NISDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		234C4EC21A2C035700093438 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Neolab;
+				TargetAttributes = {
+					234C4EC91A2C035700093438 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					234C4ED41A2C035700093438 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					23D5B5C41A3E865100481884 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 234C4EC51A2C035700093438 /* Build configuration list for PBXProject "NISDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 234C4EC11A2C035700093438;
+			productRefGroup = 234C4ECB1A2C035700093438 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				234C4EC91A2C035700093438 /* NISDK */,
+				234C4ED41A2C035700093438 /* NISDKTests */,
+				23D5B5C41A3E865100481884 /* Framework */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		234C4ED31A2C035700093438 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		23D5B5C31A3E608B00481884 /* Build Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport FRAMEWORK_LOCN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework\"\n\n# Create the path to the real Headers die\nmkdir -p \"${FRAMEWORK_LOCN}/Versions/${FRAMEWORK_VERSION}/Headers\"\n\n# Create the required symlinks\n/bin/ln -sfh \"${FRAMEWORK_VERSION}\" \"${FRAMEWORK_LOCN}/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${FRAMEWORK_LOCN}/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \\\n\"${FRAMEWORK_LOCN}/${PRODUCT_NAME}\"\n\n# Copy the public headers into the framework\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \\\n\"${FRAMEWORK_LOCN}/Versions/${FRAMEWORK_VERSION}/Headers\"";
+		};
+		23D5B5CA1A3E869600481884 /* MultiPlatform Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "MultiPlatform Build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n# If we're already inside this script then die\nif [ -n \"$RW_MULTIPLATFORM_BUILD_IN_PROGRESS\" ]; then\nexit 0\nfi\nexport RW_MULTIPLATFORM_BUILD_IN_PROGRESS=1\n\nRW_FRAMEWORK_NAME=${PROJECT_NAME}\nRW_INPUT_STATIC_LIB=\"lib${PROJECT_NAME}.a\"\nRW_FRAMEWORK_LOCATION=\"${BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework\"\nfunction build_static_library {\n    # Will rebuild the static library as specified\n    #     build_static_library sdk\n    xcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" \\\n    -target \"${TARGET_NAME}\" \\\n    -configuration \"${CONFIGURATION}\" \\\n    -sdk \"${1}\" \\\n    ONLY_ACTIVE_ARCH=NO \\\n    BUILD_DIR=\"${BUILD_DIR}\" \\\n    OBJROOT=\"${OBJROOT}\" \\\n    BUILD_ROOT=\"${BUILD_ROOT}\" \\\n    SYMROOT=\"${SYMROOT}\" $ACTION\n}\n\nfunction make_fat_library {\n    # Will smash 2 static libs together\n    #     make_fat_library in1 in2 out\n    xcrun lipo -create \"${1}\" \"${2}\" -output \"${3}\"\n}\n# 1 - Extract the platform (iphoneos/iphonesimulator) from the SDK name\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]; then\nRW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# 2 - Extract the version from the SDK\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]; then\nRW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# 3 - Determine the other platform\nif [ \"$RW_SDK_PLATFORM\" == \"iphoneos\" ]; then\nRW_OTHER_PLATFORM=iphonesimulator\nelse\nRW_OTHER_PLATFORM=iphoneos\nfi\n\n# 4 - Find the build directory\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$RW_SDK_PLATFORM$ ]]; then\nRW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${RW_OTHER_PLATFORM}\"\nelse\necho \"Could not find other platform build directory.\"\nexit 1\nfi\n# Build the other platform.\nbuild_static_library \"${RW_OTHER_PLATFORM}${RW_SDK_VERSION}\"\n\n# If we're currently building for iphonesimulator, then need to rebuild\n#   to ensure that we get both i386 and x86_64\nif [ \"$RW_SDK_PLATFORM\" == \"iphonesimulator\" ]; then\nbuild_static_library \"${SDK_NAME}\"\nfi\n\n# Join the 2 static libs into 1 and push into the .framework\nmake_fat_library \"${BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_FRAMEWORK_LOCATION}/Versions/${FRAMEWORK_VERSION}/${RW_FRAMEWORK_NAME}\"\n# Ensure that the framework is present in both platform's build directories\ncp -a \"${RW_FRAMEWORK_LOCATION}/Versions/${FRAMEWORK_VERSION}/${RW_FRAMEWORK_NAME}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework/Versions/${FRAMEWORK_VERSION}/${RW_FRAMEWORK_NAME}\"\n\n# Copy the framework to the user's desktop\nditto \"${RW_FRAMEWORK_LOCATION}\" \"${HOME}/Desktop/${RW_FRAMEWORK_NAME}.framework\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		234C4EC61A2C035700093438 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				234C4F501A2C050000093438 /* NJMedia.m in Sources */,
+				234C4F441A2C050000093438 /* NJNotebook.m in Sources */,
+				234C4F4E1A2C050000093438 /* NJLinearFilter.m in Sources */,
+				23BFECD01A35299F0021EAB0 /* KeychainItemWrapper.m in Sources */,
+				23BFEC8E1A351BCA0021EAB0 /* NJPenCommManager.m in Sources */,
+				234C4F581A2C050000093438 /* NJTransformation.m in Sources */,
+				238009A11E7B8AAF00040B1C /* NPPaperInfo.m in Sources */,
+				238009A31E7B8AAF00040B1C /* NPPUIInfo.m in Sources */,
+				234C4F521A2C050000093438 /* NJNode.m in Sources */,
+				234C4F651A2C050000093438 /* MyFunctions.m in Sources */,
+				23BFEC901A351BCA0021EAB0 /* NJPenCommParser.m in Sources */,
+				238009A71E7B8AE100040B1C /* NPPaperManager.m in Sources */,
+				234C4F481A2C050000093438 /* NJNotebookInfo.m in Sources */,
+				234C4F361A2C050000093438 /* NJCommon.m in Sources */,
+				234C4F5E1A2C050000093438 /* PDFPageRenderer.m in Sources */,
+				234C4F5C1A2C050000093438 /* PDFPageConverter.m in Sources */,
+				234C4F381A2C050000093438 /* NJNotebookIdStore.m in Sources */,
+				234C4F4A1A2C050000093438 /* NJNotebookPaperInfo.m in Sources */,
+				234C4F461A2C050000093438 /* NJNotebookDocument.m in Sources */,
+				234C4F421A2C050000093438 /* NJVoiceManager.m in Sources */,
+				2380099F1E7B8AAF00040B1C /* NPNotebookInfo.m in Sources */,
+				238009AB1E7B8AFD00040B1C /* NJXMLParser.m in Sources */,
+				234C4F5A1A2C050000093438 /* NJVoiceMemo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		234C4ED11A2C035700093438 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		234C4ED81A2C035700093438 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 234C4EC91A2C035700093438 /* NISDK */;
+			targetProxy = 234C4ED71A2C035700093438 /* PBXContainerItemProxy */;
+		};
+		23D5B5C91A3E867300481884 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 234C4EC91A2C035700093438 /* NISDK */;
+			targetProxy = 23D5B5C81A3E867300481884 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		234C4EDC1A2C035700093438 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = 2.9.7;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		234C4EDD1A2C035700093438 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = 2.9.7;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		234C4EDF1A2C035700093438 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_VERSION = 2.9.7;
+				GCC_PREFIX_HEADER = NISDK/NISDK.h;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				HEADER_SEARCH_PATHS = Headers;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		234C4EE01A2C035700093438 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_VERSION = 2.9.7;
+				GCC_PREFIX_HEADER = NISDK/NISDK.h;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				HEADER_SEARCH_PATHS = Headers;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		234C4EE21A2C035700093438 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NISDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		234C4EE31A2C035700093438 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NISDKTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		23D5B5C61A3E865100481884 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		23D5B5C71A3E865100481884 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		234C4EC51A2C035700093438 /* Build configuration list for PBXProject "NISDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				234C4EDC1A2C035700093438 /* Debug */,
+				234C4EDD1A2C035700093438 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		234C4EDE1A2C035700093438 /* Build configuration list for PBXNativeTarget "NISDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				234C4EDF1A2C035700093438 /* Debug */,
+				234C4EE01A2C035700093438 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		234C4EE11A2C035700093438 /* Build configuration list for PBXNativeTarget "NISDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				234C4EE21A2C035700093438 /* Debug */,
+				234C4EE31A2C035700093438 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23D5B5C51A3E865100481884 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23D5B5C61A3E865100481884 /* Debug */,
+				23D5B5C71A3E865100481884 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 234C4EC21A2C035700093438 /* Project object */;
+}

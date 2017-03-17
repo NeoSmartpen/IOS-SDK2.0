@@ -2,6 +2,26 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+.svn
+.DS_Store
+iOSSDK2.0_NISDK/NISDK.xcodeproj/project.xcworkspace/xcuserdata
+iOSSDK2.0_NISDK/NISDK.xcodeproj/project.xcworkspace/xcshareddata
+iOSSDK2.0_NISDK/NISDK.xcodeproj/xcuserdata
+iOSSDK2.0_NISDK/NISDK.xcworkspace/xcuserdata
+NISDK.xcodeproj/project.xcworkspace/xcuserdata
+NISDK.xcodeproj/project.xcworkspace/xcshareddata
+NISDK.xcodeproj/xcuserdata
+NISDK.xcworkspace/xcuserdata
+iOSSDK2.0_sample_code/n2sample.xcodeproj/project.xcworkspace/xcuserdata
+iOSSDK2.0_sample_code/n2sample.xcodeproj/project.xcworkspace/xcshareddata
+iOSSDK2.0_sample_code/n2sample.xcodeproj/xcuserdata
+iOSSDK2.0_sample_code/n2sample.xcworkspace/xcuserdata
+n2sample.xcodeproj/project.xcworkspace/
+n2sample.xcodeproj/project.xcworkspace/xcuserdata
+n2sample.xcodeproj/project.xcworkspace/xcshareddata
+n2sample.xcodeproj/xcuserdata
+n2sample.xcworkspace/xcuserdata
+
 ## Build generated
 build/
 DerivedData/

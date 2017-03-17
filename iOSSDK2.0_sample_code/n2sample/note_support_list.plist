@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>section</key>
+		<integer>3</integer>
+		<key>owner</key>
+		<integer>27</integer>
+		<key>noteIds</key>
+		<array>
+			<integer>601</integer>
+			<integer>602</integer>
+		</array>
+	</dict>
+	<dict>
+		<key>section</key>
+		<integer>0</integer>
+		<key>owner</key>
+		<integer>27</integer>
+		<key>noteIds</key>
+		<array>
+			<integer>605</integer>
+			<integer>606</integer>
+			<integer>608</integer>
+		</array>
+	</dict>
+	<dict>
+		<key>section</key>
+		<integer>3</integer>
+		<key>owner</key>
+		<integer>109</integer>
+		<key>noteIds</key>
+		<array>
+			<integer>501</integer>
+			<integer>502</integer>
+		</array>
+	</dict>
+	<dict>
+		<key>section</key>
+		<integer>5</integer>
+		<key>owner</key>
+		<integer>6</integer>
+		<key>noteIds</key>
+		<array>
+			<integer>80</integer>
+		</array>
+	</dict>
+</array>
+</plist>
