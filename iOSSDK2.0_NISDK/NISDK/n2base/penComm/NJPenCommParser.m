@@ -552,6 +552,11 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             int packet_count = _packetDataLength / STROKE_SDK2_PACKET_LEN;
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x65 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
+            
             BOOL shouldCheck = NO;
             int mid = packet_count / 2;
 
@@ -623,6 +628,11 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             int packet_count = _packetDataLength / STROKE2_SDK2_PACKET_LEN;
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x66 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
+            
             BOOL shouldCheck = NO;
             int mid = packet_count / 2;
             
@@ -689,6 +699,11 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             int packet_count = _packetDataLength / STROKE3_SDK2_PACKET_LEN;
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x67 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
+            
             BOOL shouldCheck = NO;
             int mid = packet_count / 2;
             
@@ -752,6 +767,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             
+	    if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x63 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
             UInt8 updown; UInt64 time_stamp; UInt8 penTipType; UInt32 penTipColor;
             
             range.location = dataPosition;
@@ -797,6 +816,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x64 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
             UInt32 section_owner, noteID, pageID;
             
             range.location = dataPosition;
@@ -834,6 +857,11 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x62 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
+            
             UInt8 reason;
             
             range.location = dataPosition;
@@ -864,6 +892,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x61 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
             UInt8 battery;
             
             range.location = dataPosition;
@@ -907,6 +939,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))){
                 NSLog(@"OfflineFileStatus fail");
+                NSLog(@"0xA3 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
                 [self notifyOfflineDataStatus:OFFLINE_DATA_RECEIVE_FAIL percent:0.0f];
                 return;
             }
@@ -945,6 +978,11 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             [packetData getBytes:&char2 range:range];
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
+            
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x24 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
             
             UInt8 isZip, trasPosition; UInt16 packetId, sizeBeforeZip, sizeAfterZip, strokeCnt;
             UInt32 sectionOwnerId, noteId;
@@ -1070,7 +1108,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res1 FW File error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) return;
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0xB1 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
             
             UInt8 transPermission;
             
@@ -1096,6 +1137,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             dataPosition++;
             _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
             
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x32 packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
             UInt8 status; UInt32 fileOffset;
             
             range.location = dataPosition;
@@ -1135,7 +1180,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res1 offline note list error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) return;
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0xA1 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
             
             UInt32 sectionOwnerId[10], noteId[10], note_ID, section_ownerID; UInt16 setCount;
             
@@ -1212,7 +1260,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res2 offline page list error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) return;
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0xA2 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
              
              UInt32 pageId[10], page_ID; UInt16 pageCount;
             
@@ -1278,7 +1329,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res delete offline data error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) return;
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0xA5 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
             
             UInt8 noteCount; UInt32 note_ID_;
             
@@ -1343,7 +1397,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res version info error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) return;
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0x81 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
             
             unsigned char deviceName[16]; unsigned char fwVer[16]; unsigned char protocolVer[8];
             unsigned char subName[16]; unsigned char mac[6]; UInt16 penType;
@@ -1409,7 +1466,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res compare password error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))){
+                NSLog(@"0x82 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
                 if(request != nil) free(request);
                 return;
             }
@@ -1470,7 +1528,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res change password error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))) {
+            if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))){
+                NSLog(@"0x82 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
                 if(response != nil) free(response);
                 return;
             }
@@ -1515,6 +1574,9 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             NSLog(@"Res pen state error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
             if ((char1 != 0) || (packetData.length < (_packetDataLength + 4))){
+                NSLog(@"0x84 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                //if(penState != nil) free(penState);
+                //free(self.penStatus2);
                 return;
             }
             

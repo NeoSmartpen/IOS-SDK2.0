@@ -277,6 +277,7 @@ typedef enum{
     } else if ([choice isEqualToString:@"Connect"]||[choice isEqualToString:@"Register"]){
             [pencommManager setHandleNewPeripheral:nil];
             [pencommManager setPenPasswordDelegate:self];
+            [pencommManager setPenStatusDelegate:self];
             [pencommManager btStart];
             self.btStatus = BT_CONNECTING;
     } else if ([choice isEqualToString:@"Disconnect"]){
