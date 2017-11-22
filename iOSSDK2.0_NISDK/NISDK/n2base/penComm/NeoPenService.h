@@ -301,6 +301,8 @@ typedef struct __attribute__((packed)){ //0x84
     unsigned char penPressure;
     unsigned char usbMode; //0: disk, 1:bulk
     unsigned char downSampling;
+    unsigned char btLocalName[16];
+    
 } PenState2Struct;
 
 typedef struct __attribute__((packed)){ //0x05
@@ -430,5 +432,7 @@ typedef enum {
     PENSTATETYPE_PENPRESSURE = 9,
     PENSTATETYPE_USBMODE = 10,
     PENSTATETYPE_DOWNSAMPLING = 11,
+    PENSTATETYPE_BTLOCALNAME = 12,
+    PENSTATETYPE_PENPRESSUREFSC = 13,
     
 } REQUEST_PENSTATETYPE;

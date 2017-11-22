@@ -19,6 +19,7 @@
 #define kPenCommMan_fw_Ver_Server     @"fwVerServer"
 #define kPenCommMan_Sub_Name     @"subName"
 #define kPenCommMan_Mtu     @"mtu"
+#define kPenCommMan_IsPressureFSC    @"isPressureFSC"
 
 extern NSString *NJPenCommManagerWriteIdleNotification;
 
@@ -432,6 +433,18 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     [[NSUserDefaults standardUserDefaults] setInteger:mtu forKey:kPenCommMan_Mtu];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+- (BOOL)isPressureFSC
+{
+    if(![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:kPenCommMan_IsPressureFSC])
+        return NO;
+    
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPenCommMan_IsPressureFSC];
+}
+- (void)setIsPressureFSC:(BOOL)isPressureFSC
+{
+    [[NSUserDefaults standardUserDefaults] setBool:isPressureFSC forKey:kPenCommMan_IsPressureFSC];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 - (void)resetPenRegistration
 {
     [self disConnect];
@@ -728,7 +741,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         if(![serviceUUIDs containsObject:self.neoPenServiceUuid]) return;
 #endif
         
-        NSLog(@"found service 18F1");
+        NSLog(@"found service 18F1 or 19F1");
         if (![self.discoveredPeripherals containsObject:peripheral]) {
             [self.discoveredPeripherals addObject:peripheral];
             [self.rssiArray addObject:RSSI];
@@ -759,7 +772,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         if(![serviceUUIDs containsObject:self.neoSystemServiceUuid]) return;
 #endif
         
-        NSLog(@"found service 18F5");
+        NSLog(@"found service 18F5 or 19F0");
         if (![self.discoveredPeripherals containsObject:peripheral]) {
             [self.discoveredPeripherals addObject:peripheral];
             [self.rssiArray addObject:RSSI];
@@ -1563,6 +1576,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 }
 - (void)writeNoteIdList:(NSData *)data
 {
+    NSLog(@"SDK1.0 writeNoteIdList");
     dispatch_async(bt_write_dispatch_queue, ^{
         [self.connectedPeripheral writeValue:data forCharacteristic:self.setNoteIdListCharacteristic type:CBCharacteristicWriteWithResponse];
     });
@@ -1647,8 +1661,13 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 - (void)setPenStateWithPenPressure:(UInt16)penPressure
 {
     if (self.isPenSDK2) {
-        REQUEST_PENSTATETYPE type = PENSTATETYPE_PENPRESSURE;
-        [self.penCommParser setPenState2WithType:type andValue:penPressure];
+        if (self.isPressureFSC){
+            REQUEST_PENSTATETYPE type = PENSTATETYPE_PENPRESSUREFSC;
+            [self.penCommParser setPenState2WithType:type andValue:penPressure];
+        } else {
+            REQUEST_PENSTATETYPE type = PENSTATETYPE_PENPRESSURE;
+            [self.penCommParser setPenState2WithType:type andValue:penPressure];
+        }
     }else{
         [self.penCommParser setPenStateWithPenPressure:penPressure];
     }
@@ -1809,8 +1828,10 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 - (void) setNoteIdListFromPList
 {
     if (self.isPenSDK2) {
+        NSLog(@"setNoteIdListFromPList2");
         [self.penCommParser setNoteIdListFromPList2];
     } else {
+        NSLog(@"setNoteIdListFromPList");
         [self.penCommParser setNoteIdListFromPList];
     }
 }
@@ -1818,8 +1839,10 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 - (void) setAllNoteIdList
 {
     if (self.isPenSDK2) {
+        NSLog(@"setAllNoteIdList2");
         [self.penCommParser setAllNoteIdList2];
     } else {
+        NSLog(@"setAllNoteIdList");
         [self.penCommParser setAllNoteIdList];
     }
 }

@@ -624,7 +624,7 @@ typedef enum {
 
 - (BOOL) offlineDotCheckerForStart:(OffLineDataDotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData1.x > 150 || offlineDotData1.x < 1) return NO;
     if (offlineDotData1.y > 150 || offlineDotData1.y < 1) return NO;
     if ((aDot->x - offlineDotData1.x) * (offlineDotData2.x - offlineDotData1.x) > 0
@@ -641,7 +641,7 @@ typedef enum {
 }
 - (BOOL) offlineDotCheckerForMiddle:(OffLineDataDotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData2.x > 150 || offlineDotData2.x < 1) return NO;
     if (offlineDotData2.y > 150 || offlineDotData2.y < 1) return NO;
     if ((offlineDotData1.x - offlineDotData2.x) * (aDot->x - offlineDotData2.x) > 0
@@ -659,7 +659,7 @@ typedef enum {
 }
 - (BOOL) offlineDotCheckerForEnd
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData2.x > 150 || offlineDotData2.x < 1) return NO;
     if (offlineDotData2.y > 150 || offlineDotData2.y < 1) return NO;
     if ((offlineDotData2.x - offlineDotData0.x) * (offlineDotData2.x - offlineDotData1.x) > 0
@@ -757,7 +757,7 @@ typedef enum {
 
 - (BOOL) offline2DotCheckerForStart:(OffLineData2DotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData1.x > 150 || offline2DotData1.x < 1) return NO;
     if (offline2DotData1.y > 150 || offline2DotData1.y < 1) return NO;
     if ((aDot->x - offline2DotData1.x) * (offline2DotData2.x - offline2DotData1.x) > 0
@@ -774,7 +774,7 @@ typedef enum {
 }
 - (BOOL) offline2DotCheckerForMiddle:(OffLineData2DotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData2.x > 150 || offline2DotData2.x < 1) return NO;
     if (offline2DotData2.y > 150 || offline2DotData2.y < 1) return NO;
     if ((offline2DotData1.x - offline2DotData2.x) * (aDot->x - offline2DotData2.x) > 0
@@ -792,7 +792,7 @@ typedef enum {
 }
 - (BOOL) offline2DotCheckerForEnd
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData2.x > 150 || offline2DotData2.x < 1) return NO;
     if (offline2DotData2.y > 150 || offline2DotData2.y < 1) return NO;
     if ((offline2DotData2.x - offline2DotData0.x) * (offline2DotData2.x - offline2DotData1.x) > 0

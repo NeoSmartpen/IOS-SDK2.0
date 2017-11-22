@@ -10,8 +10,7 @@
 #import <NISDK/NISDK.h>
 
 NSString *kURL_NEOLAB_FW20 =         @"http://one.neolab.kr/resource/fw20";
-NSString *kURL_NEOLAB_FW20_JSON =    @"/protocol2.0_firmware.json";
-NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
+NSString *kURL_NEOLAB_ALL_JSON =     @"/firmware_all.json";
 
 @interface NJFWUpdateViewController () <UIAlertViewDelegate, NJFWUpdateDelegate, NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
@@ -43,7 +42,7 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self initVC];
     [self updatePenFWVerision];
 }
@@ -129,8 +128,7 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
     } else {
         _progressBar.progress = (percent/100.0f);
         
-        if((_counter ++ % 10) == 5)
-            _progressViewLabel.text = [NSString stringWithFormat:@"Updating pen firmware (%2d%%)",(int)percent];
+        _progressViewLabel.text = [NSString stringWithFormat:@"Updating pen firmware (%.2f%%)",percent];
     }
 }
 
@@ -169,8 +167,8 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
     if(isEmpty(_fwLoc)) return;
     
     NSString *urlStr;
-    if ([NJPenCommManager sharedInstance].isPenSDK2)
-        urlStr = [NSString stringWithFormat:@"%@%@",kURL_NEOLAB_FW20,_fwLoc];
+    
+    urlStr = [NSString stringWithFormat:@"%@%@",kURL_NEOLAB_FW20,_fwLoc];
     
     NSURL *url = [NSURL URLWithString:urlStr];
 
@@ -244,14 +242,8 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
     _responseData = [NSMutableData data];
     
     NSString *url;
-    if ([NJPenCommManager sharedInstance].isPenSDK2){
-        NSString *name = [NJPenCommManager sharedInstance].deviceName;
-        if ([name isEqualToString:@"NWP-F50"]) {
-            url = [NSString stringWithFormat:@"%@%@",kURL_NEOLAB_FW20,kURL_NEOLAB_FW20_F50_JSON];
-        }else{
-            url = [NSString stringWithFormat:@"%@%@",kURL_NEOLAB_FW20,kURL_NEOLAB_FW20_JSON];
-        }
-    }
+
+    url = [NSString stringWithFormat:@"%@%@",kURL_NEOLAB_FW20,kURL_NEOLAB_ALL_JSON];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:
                              [NSURL URLWithString:url]];
@@ -300,8 +292,25 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
     NSError *e = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:_responseData options:NSJSONReadingMutableLeaves error:nil];
 
-    NSString *loc = [json objectForKey:@"location"];
-    NSString *ver = [json objectForKey:@"version"];
+    NSDictionary *value; NSString *loc; NSString *ver;
+    if ([NJPenCommManager sharedInstance].isPenSDK2){
+        NSString *name = [NJPenCommManager sharedInstance].deviceName;
+        if ([name isEqualToString:@"NWP-F120"])
+            value = [json objectForKey:@"NWP-F120"];
+        else if ([name isEqualToString:@"NWP-F121"])
+            value = [json objectForKey:@"NWP-F121"];
+        else if ([name isEqualToString:@"NWP-F50"])
+            value = [json objectForKey:@"NWP-F50"];
+        
+        loc = [value objectForKey:@"location"];
+        ver = [value objectForKey:@"version"];
+        
+    }else{
+        value = [json objectForKey:@"NWP-F110"];
+
+        loc = [value objectForKey:@"location"];
+        ver = [value objectForKey:@"version"];
+    }
     
     _fwLoc = loc;
     _fwVerServer = ver;
@@ -332,7 +341,7 @@ NSString *kURL_NEOLAB_FW20_F50_JSON =    @"/protocol2.0_firmware_f50.json";
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil, nil];
-        
+
         alert.tag = 1;
         [alert show];
     }

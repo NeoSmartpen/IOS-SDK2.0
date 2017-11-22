@@ -400,8 +400,10 @@ typedef enum{
          foundPeripheral = self.discoveredPeripherals[0];
          penName = foundPeripheral.name;
         if ([serviceUUID isEqualToString:@"19F0"] || [serviceUUID isEqualToString:@"19F1"]) {
+            pencommManager.isPenSDK2 = YES;
             NSLog(@"Pen SDK2.0");
         } else {
+            pencommManager.isPenSDK2 = NO;
             NSLog(@"Pen SDK1.0");
         }
         
@@ -603,7 +605,8 @@ typedef enum{
     NSUInteger notebookId = 625; NSUInteger sectionId = 3; NSUInteger ownerId = 27;
     [[NPPaperManager sharedInstance] reqAddUsingNote:notebookId section:sectionId owner:ownerId];
     
-    [[NJPenCommManager sharedInstance] setNoteIdListFromPList];
+    //[pencommManager setNoteIdListFromPList];
+    [pencommManager setAllNoteIdList];
 }
 
 //NJPenCommParserCommandHandler

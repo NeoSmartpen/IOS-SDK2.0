@@ -14,6 +14,7 @@
 #import <NISDK/NJPenCommParser.h>
 #import <NISDK/MyFunctions.h>
 #import <NISDK/NJNotebookPaperInfo.h>
+#import <NISDK/PDFPageConverter.h>
 @interface NISDK : NSObject
 
 @end

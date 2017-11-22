@@ -107,6 +107,7 @@ typedef enum {
 @property (nonatomic) NSMutableArray *serviceIdArray;
 @property (strong, nonatomic) NSString *protocolVersion;
 @property (nonatomic) BOOL initialConnect;
+@property (nonatomic, readwrite) BOOL isPressureFSC;
 
 + (NJPenCommManager *) sharedInstance;
 - (void) setPenCommParserStrokeHandler:(id<NJPenCommParserStrokeHandler>)strokeHandler;

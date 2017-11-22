@@ -537,7 +537,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_EVENT_PEN_DOTCODE:
         {
-            
+            if (packetData.length < 3) return;
+                
             strokeData = malloc(sizeof(COMM2_WRITE_DATA));
             
             unsigned char time, f_x, f_y; UInt16 force, x, y;
@@ -756,6 +757,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 
         case PACKET_CMD_EVENT_PEN_UPDOWN:
         {
+	    if (packetData.length < 3) return;
             updownData = malloc(sizeof(COMM_PENUP_DATA));
             
             range.location = dataPosition;
@@ -804,6 +806,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 
         case PACKET_CMD_EVENT_PEN_NEWID:
         {
+            if (packetData.length < 3) return;
             
             newIdData = malloc(sizeof(COMM_CHANGEDID2_DATA));
             
@@ -845,6 +848,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_EVENT_PWR_OFF:
         {
+            if (packetData.length < 3) return;
             
             exchange = malloc(sizeof(ReadyExchangeDataRequestStruct));
             
@@ -881,6 +885,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_EVENT_BATT_ALARM:
         {
+	    if (packetData.length < 3) return;
             self.penState = malloc(sizeof(PenStateStruct));
             
             range.location = dataPosition;
@@ -921,6 +926,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
            
         case PACKET_CMD_RES1_OFFLINE_DATA_INFO:
         {
+            if (packetData.length < 4) return;
+            
             //error code
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
@@ -970,6 +977,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 
         case PACKET_CMD_REQ2_OFFLINE_DATA:
         {
+            if (packetData.length < 3) return;
+            
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
             dataPosition++;
@@ -1092,6 +1101,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 
         case PACKET_CMD_RES1_FW_FILE:
         {
+            if (packetData.length < 4) return;
+            
             //error code
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
@@ -1128,6 +1139,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
         case PACKET_CMD_REQ2_FW_FILE:
             
         {
+            if (packetData.length < 3) return;
+            
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
             dataPosition++;
@@ -1163,6 +1176,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES1_OFFLINE_NOTE_LIST:
         {
+            if (packetData.length < 4) return;
             
             //error code
             range.location = dataPosition;
@@ -1244,6 +1258,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES2_OFFLINE_PAGE_LIST:
         {
+            if (packetData.length < 4) return;
+            
              //error code
              range.location = dataPosition;
              [packetData getBytes:&char1 range:range];
@@ -1285,6 +1301,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_SET_NOTE_LIST:
         {
+            if (packetData.length < 4) return;
+            
             //error code
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
@@ -1313,6 +1331,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_DEL_OFFLINE_DATA:
         {
+            if (packetData.length < 4) return;
+            
             //error code
             range.location = dataPosition;
             [packetData getBytes:&char1 range:range];
@@ -1356,6 +1376,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_SET_PEN_STATE:
         {
+            if (packetData.length < 4) return;
             
             //error code
             range.location = dataPosition;
@@ -1380,6 +1401,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 
         case PACKET_CMD_RES_VERSION_INFO:
         {
+            if (packetData.length < 4) return;
             
             //error code
             range.location = dataPosition;
@@ -1403,7 +1425,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             }
             
             unsigned char deviceName[16]; unsigned char fwVer[16]; unsigned char protocolVer[8];
-            unsigned char subName[16]; unsigned char mac[6]; UInt16 penType;
+            unsigned char subName[16]; unsigned char mac[6]; UInt16 penType; UInt8 pressureType;
             
             range.location = dataPosition;
             range.length = 16;
@@ -1434,6 +1456,21 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             range.location = dataPosition;
             range.length = 6;
             [packetData getBytes:&mac range:range];
+            dataPosition += 6;
+            
+            if ([packetData length] > dataPosition) {
+                range.location = dataPosition;
+                range.length = 1;
+                [packetData getBytes:&pressureType range:range];
+                NSLog(@"pressure sensor type:%d",pressureType);
+                if (pressureType == 0x01)
+                    _commManager.isPressureFSC = YES;
+                else
+                    _commManager.isPressureFSC = NO;
+            } else {
+                _commManager.isPressureFSC = NO;
+            }
+            NSLog(@"Version info data length:%d",[packetData length]);
             
             NSString *dName = [[NSString alloc] initWithBytes:deviceName length:sizeof(deviceName) encoding:NSUTF8StringEncoding];
             _commManager.deviceName = [NSString stringWithCString:[dName UTF8String] encoding:NSUTF8StringEncoding];
@@ -1448,6 +1485,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_COMPARE_PWD:
         {
+            if (packetData.length < 4) return;
+            
             request = malloc(sizeof(PenPasswordRequestStruct));
             
             //error code
@@ -1510,6 +1549,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_CHANGE_PWD:
         {
+            if (packetData.length < 4) return;
+            
             response = malloc(sizeof(PenPasswordChangeResponseStruct));
             
             //error code
@@ -1553,6 +1594,9 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_RES_PEN_STATE:
         {
+    
+            if (packetData.length < 4) return;
+            
             if(self.penStatus2 != nil) free(self.penStatus2);
             self.penState = malloc(sizeof(PenStateStruct));
             self.penStatus2 = malloc(sizeof(PenState2Struct));
@@ -1685,6 +1729,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             }
             
             if (char1 != 0){
+                
                 return;
             } else if (char1 == 0){
                 [self parsePenStatusData:(unsigned char *)self.penState withLength:sizeof(PenStateStruct)];
@@ -1707,6 +1752,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
                     } else if (lock == 0){
                     	_commManager.hasPenPassword = NO;
                         
+                        NSLog(@"set note id list command");
                         [self setNoteIdList];
                         
                     }
@@ -2494,7 +2540,7 @@ static int length4Speed;
 
 - (BOOL) offlineDotCheckerForStart:(OffLineDataDotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData1.x > 150 || offlineDotData1.x < 1) return NO;
     if (offlineDotData1.y > 150 || offlineDotData1.y < 1) return NO;
     if ((aDot->x - offlineDotData1.x) * (offlineDotData2.x - offlineDotData1.x) > 0
@@ -2511,7 +2557,7 @@ static int length4Speed;
 }
 - (BOOL) offlineDotCheckerForMiddle:(OffLineDataDotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData2.x > 150 || offlineDotData2.x < 1) return NO;
     if (offlineDotData2.y > 150 || offlineDotData2.y < 1) return NO;
     if ((offlineDotData1.x - offlineDotData2.x) * (aDot->x - offlineDotData2.x) > 0
@@ -2529,7 +2575,7 @@ static int length4Speed;
 }
 - (BOOL) offlineDotCheckerForEnd
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offlineDotData2.x > 150 || offlineDotData2.x < 1) return NO;
     if (offlineDotData2.y > 150 || offlineDotData2.y < 1) return NO;
     if ((offlineDotData2.x - offlineDotData0.x) * (offlineDotData2.x - offlineDotData1.x) > 0
@@ -3413,8 +3459,8 @@ static int length4Speed;
     NSUInteger btMtu;
     NSUInteger returnedMTU = _commManager.mtu;
     
-    if (IS_OS_9_OR_LATER)
-        btMtu = returnedMTU;
+    if (IS_OS_9_OR_LATER && (returnedMTU > 100))
+        btMtu = BT_MTU;
     else
         btMtu = DEFAULT_BT_MTU;
     
@@ -3445,7 +3491,7 @@ static int length4Speed;
         
     } else {
         NSData *data = [NSData dataWithData:wholePacketData];
-        //NSLog(@"setNoteIdListSectionOwnerFromPList2 0x11 data %@", data);
+        NSLog(@"setNoteIdListSectionOwnerFromPList2 0x11 data %@", data);
         [_commManager writePen2SetData:data];
     }
 }
@@ -3522,8 +3568,8 @@ static int length4Speed;
     NSUInteger btMtu;
     NSUInteger returnedMTU = _commManager.mtu;
     
-    if (IS_OS_9_OR_LATER)
-        btMtu = returnedMTU;
+    if (IS_OS_9_OR_LATER && (returnedMTU > 100))
+        btMtu = BT_MTU;
     else
         btMtu = DEFAULT_BT_MTU;
     
@@ -3554,7 +3600,7 @@ static int length4Speed;
         
     }  else {
         NSData *data = [NSData dataWithData:wholePacketData];
-        //NSLog(@"setNoteIdListFromPList2 0x11 data %@", data);
+        NSLog(@"setNoteIdListFromPList2 0x11 data %@", data);
         [_commManager writePen2SetData:data];
     }
     
@@ -3935,8 +3981,8 @@ static int length4Speed;
     
     NSUInteger returnedMTU = _commManager.mtu;
     
-    if (IS_OS_9_OR_LATER)
-        _fwBtMtu = returnedMTU;
+    if (IS_OS_9_OR_LATER && (returnedMTU > 100))
+        _fwBtMtu = BT_MTU;
     else
         _fwBtMtu = DEFAULT_BT_MTU;
     
@@ -4344,10 +4390,12 @@ static int length4Speed;
     if (self.canvasStartDelegate) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            NSLog(@"setNoteIdList when canvasStartDelegate is not nil");
             [self.canvasStartDelegate setPenCommNoteIdList];
             
-            
         });
+    } else {
+        NSLog(@"setNoteIdList doesn't work because canvasStartDelegate is nil");
     }
 }
 
@@ -4356,6 +4404,7 @@ static int length4Speed;
     SetNoteIdListStruct noteIdList;
     NSData *data;
 
+    NSLog(@"setAllNoteIdList SDK1.0");
 //NISDK -
     noteIdList.type = 3;
     int index = 0;
@@ -4380,6 +4429,7 @@ static int length4Speed;
     if (isEmpty(noteInfo.paperInfos)) return;
     NSArray *allKeyName = [noteInfo.paperInfos allKeys];
     
+    NSLog(@"setNoteIdListFromPList SDK1.0");
     noteIdList.type = 1; // Note Id
     for (NSDictionary *note in notesSupported) {
         section_id = [(NSNumber *)[note objectForKey:@"section"] unsignedCharValue];
@@ -4453,6 +4503,8 @@ static int length4Speed;
     NPPaperManager *noteInfo = [NPPaperManager sharedInstance];
     NSArray *notesSupported = [noteInfo notesSupported];
 
+    NSLog(@"setNoteIdListSectionOwnerFromPList SDK1.0");
+    
     noteIdList.type = 2;
     int index = 0;
     
@@ -4787,7 +4839,7 @@ static int length4Speed;
 
 - (BOOL) offline2DotCheckerForStart:(OffLineData2DotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData1.x > 150 || offline2DotData1.x < 1) return NO;
     if (offline2DotData1.y > 150 || offline2DotData1.y < 1) return NO;
     if ((aDot->x - offline2DotData1.x) * (offline2DotData2.x - offline2DotData1.x) > 0
@@ -4804,7 +4856,7 @@ static int length4Speed;
 }
 - (BOOL) offline2DotCheckerForMiddle:(OffLineData2DotStruct *)aDot
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData2.x > 150 || offline2DotData2.x < 1) return NO;
     if (offline2DotData2.y > 150 || offline2DotData2.y < 1) return NO;
     if ((offline2DotData1.x - offline2DotData2.x) * (aDot->x - offline2DotData2.x) > 0
@@ -4822,7 +4874,7 @@ static int length4Speed;
 }
 - (BOOL) offline2DotCheckerForEnd
 {
-    static const float delta = 2.0f;
+    static const float delta = 10.0f;
     if (offline2DotData2.x > 150 || offline2DotData2.x < 1) return NO;
     if (offline2DotData2.y > 150 || offline2DotData2.y < 1) return NO;
     if ((offline2DotData2.x - offline2DotData0.x) * (offline2DotData2.x - offline2DotData1.x) > 0
