@@ -1898,4 +1898,19 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 {
     self.btIDList = btIDList;
 }
+- (void) removePerpheralFromDiscoveredPeripherals:(CBPeripheral *)peripheral
+{
+    NSUInteger index = [self.discoveredPeripherals indexOfObject:peripheral];
+    
+    if (index != NSNotFound) {
+        if (index < [self.discoveredPeripherals count] && index < [self.rssiArray count]
+            && index < [self.macArray count] && index < [self.serviceIdArray count] && index < [self.penLocalNameArray count]) {
+            [self.discoveredPeripherals removeObjectAtIndex:index];
+            [self.rssiArray removeObjectAtIndex:index];
+            [self.macArray removeObjectAtIndex:index];
+            [self.serviceIdArray removeObjectAtIndex:index];
+            [self.penLocalNameArray removeObjectAtIndex:index];
+        }
+    }
+}
 @end

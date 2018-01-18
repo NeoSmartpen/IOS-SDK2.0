@@ -153,6 +153,7 @@ typedef enum {
 - (void)cancelWritingStartNotification;
 - (void)resetPenRegistration;
 - (void)setPenStateWithHover:(UInt16)useHover;
+- (void)removePerpheralFromDiscoveredPeripherals:(CBPeripheral *)peripheral;
 
 //For BTLE connection
 - (void)writeData:(NSData *)data to:(CBCharacteristic *)characteristic;

@@ -525,6 +525,9 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     int dataPosition = 0;
     NSRange range;
     unsigned char char0, char1, char2, char3;
+    
+    if (packetData.length < 1) return;
+    
     range.location = dataPosition;
     range.length = 1;
     [packetData getBytes:&char0 range:range];
@@ -614,7 +617,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_EVENT_PEN_DOTCODE2:
         {
-            
+            if (packetData.length < 3) return;
             strokeData = malloc(sizeof(COMM2_WRITE_DATA));
             
             unsigned char time, f_x, f_y; UInt16 force, x, y;
@@ -685,7 +688,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
         case PACKET_CMD_EVENT_PEN_DOTCODE3:
         {
-            
+            if (packetData.length < 3) return;
             strokeData = malloc(sizeof(COMM2_WRITE_DATA));
             
             unsigned char time, f_x, f_y, x, y; UInt16 force;
@@ -1199,11 +1202,14 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
                 return;
             }
             
-            UInt32 sectionOwnerId[10], noteId[10], note_ID, section_ownerID; UInt16 setCount;
+            UInt32 note_ID, section_ownerID; UInt16 setCount;
             
             range.location = dataPosition;
             range.length = 2;
             [packetData getBytes:&setCount range:range];
+            
+            UInt32 *sectionOwnerId = malloc(sizeof(UInt32)* setCount);
+            UInt32 *noteId = malloc(sizeof(UInt32)* setCount);
             
             if(setCount == 0){
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -1282,6 +1288,17 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             }
              
              UInt32 pageId[10], page_ID; UInt16 pageCount;
+             UInt32 sectionOwnerId, noteId;
+            
+             range.location = dataPosition;
+             range.length = 4;
+             [packetData getBytes:&sectionOwnerId range:range];
+             dataPosition +=4;
+            
+             range.location = dataPosition;
+             range.length = 4;
+             [packetData getBytes:&noteId range:range];
+             dataPosition +=4;
             
              range.location = dataPosition;
              range.length = 2;
@@ -1394,7 +1411,17 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             
             NSLog(@"Res set penState error code : %d, %@", char1, (char1 == 0)? @"Success":@"Fail");
             
-            if (char1 != 0) return;
+            if (char1 != 0 || (packetData.length < (_packetDataLength + 4))) {
+                NSLog(@"0x81 error code %c, packetData len %lu, length in packet %d",char1, packetData.length - 4, _packetDataLength);
+                return;
+            }
+            
+            UInt8 type;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&type range:range];
+            
         }
             
             break;
@@ -1707,7 +1734,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             self.penStatus2->penPressure = fsrStep;
             dataPosition ++;
             
-            if ([packetData length] > dataPosition) {
+            if ([packetData length] >= (dataPosition + 2)) {
                 range.location = dataPosition;
                 [packetData getBytes:&usbMode range:range];
                 self.penStatus2->usbMode = usbMode;
@@ -1717,16 +1744,16 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
                 [packetData getBytes:&downSampling range:range];
                 self.penStatus2->downSampling = downSampling;
                 dataPosition ++;
-                
-                if ([packetData length] > (dataPosition + sizeof(btLocalName))) {
-                    range.location = dataPosition;
-                    range.length = 16;
-                    [packetData getBytes:&btLocalName range:range];
-                    NSString *lName = [[NSString alloc] initWithBytes:btLocalName length:sizeof(btLocalName) encoding:NSUTF8StringEncoding];
-                    if(!isEmpty(lName))
-                        localName = [NSString stringWithCString:[lName UTF8String] encoding:NSUTF8StringEncoding];
-                }
             }
+            if ([packetData length] >= (dataPosition + sizeof(btLocalName))) {
+                range.location = dataPosition;
+                range.length = 16;
+                [packetData getBytes:&btLocalName range:range];
+                NSString *lName = [[NSString alloc] initWithBytes:btLocalName length:sizeof(btLocalName) encoding:NSUTF8StringEncoding];
+                if(!isEmpty(lName))
+                    localName = [NSString stringWithCString:[lName UTF8String] encoding:NSUTF8StringEncoding];
+            }
+            
             
             if (char1 != 0){
                 
