@@ -1217,6 +1217,12 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
                         [self.offlineDataDelegate offlineDataDidReceiveNoteListCount:0 ForSectionOwnerId:0];
                 });
                 return;
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(!isEmpty(self.offlineDataDelegate) && [self.offlineDataDelegate respondsToSelector:@selector(offlineDataDidReceiveNoteListCount:ForSectionOwnerId:)]){
+                        [self.offlineDataDelegate offlineDataDidReceiveNoteListCount:setCount ForSectionOwnerId:0];
+                    }
+                });
             }
             dataPosition += 2;
             
@@ -4627,6 +4633,14 @@ static int length4Speed;
     _penCommUpDownDataReady = NO;
     _penCommIdDataReady = NO;
     _penCommStrokeDataReady = NO;
+    
+    //packet init
+    _packetDataLength = 0;
+    _count = 0;
+    _packetData = nil;
+    
+    _isStart = YES;
+    _oneTime = NO;
     
     NSLog(@"resetDataReady is performed because of disconnected signal");
 }

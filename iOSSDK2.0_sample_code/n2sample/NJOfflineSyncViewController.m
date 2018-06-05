@@ -56,7 +56,7 @@ typedef enum {
 @property (nonatomic, strong) NSMutableArray *noteIdList;
 @property (nonatomic, strong) NSMutableDictionary *noteDict;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic) UInt32 offlinePageId;
+@property (nonatomic) int offlinePageId;
 @property (strong, nonatomic) NSMutableArray *offlineOverStrokeArray;
 
 @end
@@ -89,7 +89,7 @@ typedef enum {
     self.menuList = [NSMutableArray array];
     self.noteDict = [NSMutableDictionary dictionary];
     
-    _offlinePageId = 0;
+    _offlinePageId = -1;
     _offlineOverStrokeArray = [NSMutableArray array];
     
 }
@@ -417,7 +417,7 @@ typedef enum {
     NSRange range;
     NSMutableArray *offlineStrokeArray = [NSMutableArray array];
     NSDate *lastStrokeTime;
-    _offlinePageId = 0;
+    _offlinePageId = -1;
     
     OffLineData2StrokeHeaderStruct strokeHeader;
     UInt64 offlineLastStrokeStartTime = 0;
@@ -433,7 +433,7 @@ typedef enum {
         }
         pageId = strokeHeader.nPageId;
         
-        if((_offlinePageId != 0) && (_offlinePageId != pageId) && ([offlineStrokeArray count] > 0))
+        if((_offlinePageId != -1) && (_offlinePageId != pageId) && ([offlineStrokeArray count] > 0))
         {
             NSNumber *pageIdNum = [NSNumber numberWithUnsignedInteger:_offlinePageId];
             lastStrokeTime = [NSDate dateWithTimeIntervalSince1970:(offlineLastStrokeStartTime / 1000.0)];
@@ -450,6 +450,9 @@ typedef enum {
         } else {
             _offlinePageId = pageId;
         }
+        
+        if (!(strokeHeader.nDotCount > 0)) continue;
+        
         NJStroke *stroke = [self parseSDK2OfflineDots:penData startAt:dataPosition withOfflineDataHeader:offlineDataHeader andStrokeHeader:&strokeHeader];
         [offlineStrokeArray addObject:stroke];
         
