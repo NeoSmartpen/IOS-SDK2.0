@@ -1,12 +1,9 @@
-## IOSSDK2.0
-for Neo Smartpen SDK2.0
+## IOS SDK2.0
+for Neo smartpen SDK2.0
 
+## About Neo smartpen
 
-## What is Neo smartpen
-
-Neo smartpen is a pen designed to capture your handwritten notes into our digital app with our Ncode notebooks.
-
-You can see more information at http://neosmartpen.com
+The Neo smartpen is designed to seamlessly integrate the real and digital worlds by transforming what you write on paper - everything from sketches and designs to business meeting notes - to your iOS, Android and Windows devices. It works in tandem with N notebooks, powered by NeoLAB Convergence’s patented Ncode technology and the accompanying application, Neo Notes. Find out more at www.neosmartpen.com 
 
 
 ## Ncode™ SERVICE DEVELOPMENT GETTING STARTED GUIDE
@@ -16,7 +13,7 @@ You can see more information at http://neosmartpen.com
 
 ## LICENSE
 
-NeoSmartpen SDK is Copyright (c) 2017 NeoLAB Convergence, Inc.
+Neo smartpen SDK is Copyright (c) 2017 NeoLAB Convergence, Inc.
 
 We provide two types of license for Pen SDK.
 
@@ -39,5 +36,5 @@ That does not require the source code open to be released, and technical support
 
 Please contact following to get more information:
 
-- Global: _globalbiz@neolab.net
-- Korea: _koreabiz@neolab.net
+- Global: _global1@neolab.net
+- Korea: _biz1@neolab.net
