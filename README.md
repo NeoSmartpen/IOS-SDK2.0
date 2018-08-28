@@ -1,4 +1,4 @@
-## IOSSDK2.0
+## IOS SDK2.0
 for Neo Smartpen SDK2.0
 
 
