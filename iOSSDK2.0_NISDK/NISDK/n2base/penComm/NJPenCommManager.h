@@ -77,6 +77,7 @@ typedef enum {
 @property (strong, nonatomic) CBMutableCharacteristic   *readCharacteristic;
 @property (strong, nonatomic) CBMutableCharacteristic   *writeCharacteristic;
 @property (strong, nonatomic) NJPenCommParser *penCommParser;
+@property (strong, nonatomic) CBPeripheral          *connectedPeripheral;
 
 @property (nonatomic, readwrite) NSInteger              sendDataIndex;
 @property (strong, nonatomic) NSData                    *dataToSend;
@@ -104,6 +105,7 @@ typedef enum {
 @property (nonatomic) NSUInteger mtu;
 @property (strong, nonatomic) NSString *penConnectionStatusMsg;
 @property (nonatomic) NSMutableArray *macArray;
+@property (nonatomic) NSMutableArray *rssiArray;
 @property (nonatomic) NSMutableArray *serviceIdArray;
 @property (strong, nonatomic) NSString *protocolVersion;
 @property (nonatomic) BOOL initialConnect;

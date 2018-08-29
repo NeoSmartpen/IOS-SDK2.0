@@ -27,7 +27,6 @@ NSString * NJPenCommManagerPageChangedNotification = @"NJPenCommManagerPageChang
 NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotification";
 
 @interface NJPenCommManager() <CBCentralManagerDelegate, CBPeripheralDelegate>
-@property (strong, nonatomic) CBPeripheral          *connectedPeripheral;
 @property (strong, nonatomic) NSMutableData         *data;
 // Pen SDK2.0 Service
 @property (strong, nonatomic) CBUUID *neoPen2ServiceUuid;
@@ -115,7 +114,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 @property (strong, nonatomic) NSTimer *regiTimer;
 @property (strong, nonatomic) NSTimer *verInfoTimer;
 @property (nonatomic) NSInteger rssiIndex;
-@property (nonatomic) NSMutableArray *rssiArray;
+//@property (nonatomic) NSMutableArray *rssiArray;
 @property (nonatomic) NSMutableArray *penLocalNameArray;
 @property (nonatomic) NSDictionary *peripheralInfo;
 @property (nonatomic) BOOL hasStrokeHandler;
