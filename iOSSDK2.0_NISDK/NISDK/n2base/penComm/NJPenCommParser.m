@@ -213,6 +213,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 @property (nonatomic) NSInteger activeSectionId;
 
 @property (nonatomic) NSUInteger fwBtMtu;
+@property (nonatomic) COMM_WRITE_DATA *prevStrokeData;
+@property (nonatomic) COMM2_WRITE_DATA *prevStrokeData2;
+@property (nonatomic) BOOL isPrevDown;
+@property (nonatomic) UInt64 latestPenTime;
 
 
 @end
@@ -1874,6 +1878,30 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 }
 - (void) parsePenStrokePacket:(unsigned char *)data withLength:(int)length withCoordCheck:(BOOL)checkCoord
 {
+    if (_isPrevDown) {
+        _isPrevDown = NO;
+        node_count_pen = -1;
+        node_count = 0;
+        self.idleCounter = IDLE_COUNT;
+        UInt64 time = _latestPenTime + 2;
+        NSNumber *timeNumber = [NSNumber numberWithLongLong:time];
+        NSNumber *color = [NSNumber numberWithUnsignedInteger:penColor];
+        NSString *status = @"down";
+        self.penDown = YES;
+        NSDictionary *stroke2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @"updown", @"type",
+                                 timeNumber, @"time",
+                                 status, @"status",
+                                 color, @"color",
+                                 nil];
+        if (self.strokeHandler != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.strokeHandler processStroke:stroke2];
+            });
+        }
+        return;
+    }
+
     //set for NISDK
     checkCoord = NO;
     
@@ -1900,7 +1928,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             float y = int_y + float_y;
             [self checkPUICoordX:x coordY:y];
         }
-        
+        _prevStrokeData2 = strokeData;
     }else{
         COMM_WRITE_DATA *strokeData = (COMM_WRITE_DATA *)data;
     
@@ -1922,6 +1950,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             float y = int_y + float_y;
             [self checkPUICoordX:x coordY:y];
         }
+        _prevStrokeData = strokeData;
     }
 }
 
@@ -2134,6 +2163,9 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
         }
 
         NSLog(@"Pen color 0x%x", (unsigned int)penColor);
+
+        _prevStrokeData = nil;
+        _prevStrokeData2 = nil;
         
     }
     else {
@@ -2152,6 +2184,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     }
     
     UInt64 time = updownData->time;
+    _latestPenTime = time;
     NSNumber *timeNumber = [NSNumber numberWithLongLong:time];
     NSNumber *color = [NSNumber numberWithUnsignedInteger:penColor];
     NSString *status = (self.penDown) ? @"down":@"up";
@@ -2176,6 +2209,39 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     UInt32 pageNumber = newIdData->page_id;
     NSLog(@"section : %d, owner : %d, note : %d, page : %d", section, (unsigned int)owner, (unsigned int)noteId, (unsigned int)pageNumber);
     
+    BOOL isPrevStrokeData = NO;
+    if (_commManager.isPenSDK2 && _prevStrokeData2 != nil)
+        isPrevStrokeData = YES;
+    else if (!_commManager.isPenSDK2 && _prevStrokeData != nil)
+        isPrevStrokeData = YES;
+    
+    if (isPrevStrokeData) {
+        //pen up
+        self.idleCounter = IDLE_COUNT;
+        if (self.idleTimer == nil)
+            _commManager.writeActiveState = YES;
+        UInt64 time = _latestPenTime + 1;
+        NSNumber *timeNumber = [NSNumber numberWithLongLong:time];
+        NSNumber *color = [NSNumber numberWithUnsignedInteger:penColor];
+        NSString *status = @"up";
+        self.penDown = NO;
+        NSDictionary *stroke = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"updown", @"type",
+                                timeNumber, @"time",
+                                status, @"status",
+                                color, @"color",
+                                nil];
+        if (self.strokeHandler != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.strokeHandler processStroke:stroke];
+            });
+        }
+        
+        _isPrevDown = YES;
+
+        
+        
+    }
     // Handle seal if section is 4.
     if (section == SEAL_SECTION_ID) {
         // Note ID is delivered as owner ID.
