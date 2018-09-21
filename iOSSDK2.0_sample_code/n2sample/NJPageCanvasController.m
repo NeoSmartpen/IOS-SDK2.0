@@ -274,6 +274,24 @@
 
 }
 
+- (void) penCommMsg:(NSDictionary *)msg
+{
+    NSString *msgType = [msg objectForKey:@"msgType"];
+    int eventCount = [[msg objectForKey:@"eventCount"] intValue];
+    int time = [[msg objectForKey:@"time"] intValue];
+    int force = [[msg objectForKey:@"force"] intValue];
+    int imageBrightness = [[msg objectForKey:@"imageBrightness"] intValue];
+    int exposureTime = [[msg objectForKey:@"exposureTime"] intValue];
+    int ndacProcessTime = [[msg objectForKey:@"ndacProcessTime"] intValue];
+    int labelCount = [[msg objectForKey:@"labelCount"] intValue];
+    int ndacErrorCode = [[msg objectForKey:@"ndacErrorCode"] intValue];
+    int classType = [[msg objectForKey:@"classType"] intValue];
+    
+    NSLog(@"msg type:%@, event count: %d, time: %d, force: %d, image brightness: %d",msgType, eventCount, time, force, imageBrightness);
+    NSLog(@"NDAC error exposure time: %d, ndac process time: %d, label count: %d", exposureTime, ndacProcessTime, labelCount);
+    NSLog(@"NDAC error ndac error code: %d, class type: %d", ndacErrorCode, classType);
+}
+
 - (void)closeBtnPressed
 {
     [[NJPenCommManager sharedInstance] requestNewPageNotification];

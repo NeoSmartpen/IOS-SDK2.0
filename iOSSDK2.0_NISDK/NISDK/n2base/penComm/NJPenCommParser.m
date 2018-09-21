@@ -50,6 +50,8 @@ typedef enum {
     PACKET_CMD_EVENT_PEN_DOTCODE = 0x65,
     PACKET_CMD_EVENT_PEN_DOTCODE2 = 0x66,
     PACKET_CMD_EVENT_PEN_DOTCODE3 = 0x67,
+    PACKET_CMD_EVENT_PEN_NDAC = 0x68,
+    PACKET_CMD_EVENT_PEN_NDAC_ERROR = 0x6D,
     PACKET_CMD_RES_VERSION_INFO = 0x81,
     PACKET_CMD_RES_COMPARE_PWD = 0x82,
     PACKET_CMD_RES_CHANGE_PWD = 0x83,
@@ -455,7 +457,8 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
         if (_count == 0) {
             if ((int_data == PACKET_CMD_EVENT_BATT_ALARM) || (int_data == PACKET_CMD_EVENT_PWR_OFF) || (int_data == PACKET_CMD_EVENT_PEN_UPDOWN)
                 || (int_data == PACKET_CMD_EVENT_PEN_NEWID) || (int_data == PACKET_CMD_EVENT_PEN_DOTCODE) || (int_data == PACKET_CMD_REQ2_OFFLINE_DATA)
-                || (int_data == PACKET_CMD_REQ2_FW_FILE)|| (int_data == PACKET_CMD_EVENT_PEN_DOTCODE2)|| (int_data == PACKET_CMD_EVENT_PEN_DOTCODE3)) {
+                || (int_data == PACKET_CMD_REQ2_FW_FILE)|| (int_data == PACKET_CMD_EVENT_PEN_DOTCODE2)|| (int_data == PACKET_CMD_EVENT_PEN_DOTCODE3)
+		        || (int_data == PACKET_CMD_EVENT_PEN_NDAC) || (int_data == PACKET_CMD_EVENT_PEN_NDAC_ERROR)) {
                 //commad 1, len 2, no err code
                 _packetHdrLen = 3;
                 _packetLenPos1 = 1;
@@ -931,6 +934,111 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
         }
             break;
            
+        case PACKET_CMD_EVENT_PEN_NDAC:
+        {
+            NSLog(@"0x68 NDAC error!");
+        }
+            break;
+        
+        case PACKET_CMD_EVENT_PEN_NDAC_ERROR:
+        {
+            NSLog(@"0x68 NDAC error!");
+            
+            if (packetData.length < 3) return;
+            
+            range.location = dataPosition;
+            [packetData getBytes:&char1 range:range];
+            dataPosition++;
+            
+            range.location = dataPosition;
+            [packetData getBytes:&char2 range:range];
+            dataPosition++;
+            _packetDataLength = (((int)char2 << 8) & 0xFF00) | ((int)char1 & 0xFF);
+            
+            if ((packetData.length < (_packetDataLength + 3))){
+                NSLog(@"0x6D packetData len %lu, length in packet %d",packetData.length - 3, _packetDataLength);
+                return;
+            }
+            
+            UInt8 eventCount, time, imageBrightness, exposureTime, processTime, ndacErrorCode, classType;
+            UInt16 force, labelCount;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&eventCount range:range];
+            NSNumber *eventCountN = [NSNumber numberWithInt:eventCount];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&time range:range];
+            NSNumber *timeN = [NSNumber numberWithInt:time];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 2;
+            [packetData getBytes:&force range:range];
+            NSNumber *forceN = [NSNumber numberWithInt:force];
+            dataPosition +=2;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&imageBrightness range:range];
+            NSNumber *imageBrightnessN = [NSNumber numberWithInt:imageBrightness];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&exposureTime range:range];
+            NSNumber *exposureTimeN = [NSNumber numberWithInt:exposureTime];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&processTime range:range];
+            NSNumber *processTimeN = [NSNumber numberWithInt:processTime];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 2;
+            [packetData getBytes:&labelCount range:range];
+            NSNumber *labelCountN = [NSNumber numberWithInt:labelCount];
+            dataPosition +=2;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&ndacErrorCode range:range];
+            NSNumber *ndacErrorCodeN = [NSNumber numberWithInt:ndacErrorCode];
+            dataPosition ++;
+            
+            range.location = dataPosition;
+            range.length = 1;
+            [packetData getBytes:&classType range:range];
+            NSNumber *classTypeN = [NSNumber numberWithInt:classType];
+            dataPosition ++;
+            
+            NSString *msgType = @"image_processing_error";
+            NSDictionary *ndacMsg = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     msgType, @"msgType",
+                                     eventCountN, @"eventCount",
+                                     timeN, @"time",
+                                     forceN, @"force",
+                                     imageBrightnessN, @"imageBrightness",
+                                     exposureTimeN, @"exposureTime",
+                                     processTimeN, @"ndacProcessTime",
+                                     labelCountN, @"labelCount",
+                                     ndacErrorCodeN, @"ndacErrorCode",
+                                     classTypeN, @"classType",
+                                     nil];
+            if (self.strokeHandler != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.strokeHandler penCommMsg:ndacMsg];
+                });
+            }
+            
+        }
+            break;
+
         case PACKET_CMD_RES1_OFFLINE_DATA_INFO:
         {
             if (packetData.length < 4) return;
@@ -2199,6 +2307,7 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
             [self.strokeHandler processStroke:stroke];
         });
     }
+
 }
 - (void) parsePenNewIdData:(unsigned char *)data withLength:(int) length
 {

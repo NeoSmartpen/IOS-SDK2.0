@@ -21,6 +21,7 @@ typedef void(^BATTERYMEMORY_BLOCK)(unsigned char remainedBattery, unsigned char 
 @optional
 - (void) notifyDataUpdating:(BOOL)updating;
 - (UInt32)setPenColor;
+- (void) penCommMsg:(NSDictionary *)msg;
 @end
 
 @protocol NJPenCommParserCommandHandler <NSObject>
