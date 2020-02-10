@@ -693,12 +693,21 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 
 - (NSString *)getMacAddrFromString:(NSData *)data
 {
-    NSString *macAddrStr =[NSString stringWithFormat:@"%@",data];
-    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@"<" withString:@""];
-    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@">" withString:@""];
-    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    return macAddrStr;
+        // Jinuk : 아래 사용법은 최신 OS에서 동작하지 않는다.
+    //    NSString *macAddrStr =[NSString stringWithFormat:@"%@",data];
+    //    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    //    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@">" withString:@""];
+    //    macAddrStr = [macAddrStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        unsigned const char* bytes = [data bytes];
+        NSMutableString *macAddrStr = [NSMutableString stringWithCapacity:[data length]];
+        [macAddrStr appendString:@"0x"];
+        for (int i=0; i < [data length]; i++) {
+            [macAddrStr appendFormat:@"%02x", bytes[i]];
+        }
+        NSLog(@"macAddrStr: %@", macAddrStr);
+        
+        return macAddrStr;
 }
 /** This callback comes whenever a peripheral that is advertising the NEO_PEN_SERVICE_UUID is discovered.
  *  We check the RSSI, to make sure it's close enough that we're interested in it, and if it is,

@@ -55,6 +55,7 @@
 		23CD8D261A390AAB00677BAF /* NJInputPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CD8D251A390AAB00677BAF /* NJInputPasswordViewController.m */; };
 		23D5B5CD1A3E8A2E00481884 /* NISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D5B5CC1A3E8A2E00481884 /* NISDK.framework */; };
 		3985C7091DBEF10000A26575 /* PlainNote.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3985C7081DBEF10000A26575 /* PlainNote.pdf */; };
+		968750AD23F1590C0095525A /* libNISDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 238009851E7B821600040B1C /* libNISDK.a */; };
 		BE66374219CD0CDD00EDD58B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE66374119CD0CDD00EDD58B /* Foundation.framework */; };
 		BE66374419CD0CDD00EDD58B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE66374319CD0CDD00EDD58B /* CoreGraphics.framework */; };
 		BE66374619CD0CDD00EDD58B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE66374519CD0CDD00EDD58B /* UIKit.framework */; };
@@ -187,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				239DC5E71A3E914900A93488 /* libz.dylib in Frameworks */,
+				968750AD23F1590C0095525A /* libNISDK.a in Frameworks */,
 				23D5B5CD1A3E8A2E00481884 /* NISDK.framework in Frameworks */,
 				BE66374419CD0CDD00EDD58B /* CoreGraphics.framework in Frameworks */,
 				BE66374619CD0CDD00EDD58B /* UIKit.framework in Frameworks */,
@@ -453,6 +455,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
