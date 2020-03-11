@@ -518,9 +518,9 @@ static NSString *kSourceCellId = @"SourceCell";
     }
     
     if ([sender isOn]) {
-        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwrOff:1];
+        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwr:1];
     } else {
-        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwrOff:0];
+        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwr:0];
     }
 }
 

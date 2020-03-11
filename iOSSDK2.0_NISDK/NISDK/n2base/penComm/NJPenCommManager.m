@@ -1716,7 +1716,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     }
 }
 
-- (void)setPenStateWithAutoPwrOff:(UInt8)autoPwrOff
+- (void)setPenStateWithAutoPwr:(UInt8)autoPwrOff
 {
     if (self.isPenSDK2) {
         [self.penCommParser setPenState2WithAutoPwrOff:autoPwrOff];

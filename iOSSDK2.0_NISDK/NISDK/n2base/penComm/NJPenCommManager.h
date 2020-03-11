@@ -147,7 +147,7 @@ typedef enum {
 
 // 추가 2.0 버전만 지원
 - (void) setPenStateWithPencap:(UInt8)pencap;
-- (void) setPenStateWithAutoPwrOff:(UInt8)autoPwrOff;
+- (void) setPenStateWithAutoPwr:(UInt8)autoPwrOff;
 - (void) setPenStatusVer2Delegate:(id<NJPenStatusVer2Delegate>)penStatusVer2Delegate;
 
 //NISDK
