@@ -491,6 +491,11 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     [self.penCommParser setPenStatusDelegate:penStatusDelegate];
 }
 
+- (void) setPenStatusVer2Delegate:(id<NJPenStatusVer2Delegate>)penStatusVer2Delegate
+{
+    [self.penCommParser setPenStatusVer2Delegate:penStatusVer2Delegate];
+}
+
 - (NSInteger) btStart
 {
     NSArray *connectedPeripherals;
@@ -1565,12 +1570,27 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 
 - (void)writePen2SetData:(NSData *)data
 {
+    // 주석처리
+    // ----------------------------------------------------------------------------------------
+//    NSUInteger capacity = data.length * 2;
+//    NSMutableString *sbuf = [NSMutableString stringWithCapacity:capacity];
+//    const unsigned char *buf = data.bytes;
+//    NSInteger i;
+//    for (i=0; i<data.length; ++i) {
+//      [sbuf appendFormat:@"%02X", (NSUInteger)buf[i]];
+//    }
+//    NSLog(@"-------------------------------------------------------");
+//    NSLog(@"data : %@", sbuf);
+//    NSLog(@"-------------------------------------------------------");
+    // ----------------------------------------------------------------------------------------
+    
     dispatch_async(bt_write_dispatch_queue, ^{
         [self.connectedPeripheral writeValue:data forCharacteristic:self.pen2SetDataCharacteristic type:CBCharacteristicWriteWithResponse];
     });
 }
 - (void)writeData:(NSData *)data to:(CBCharacteristic *)characteristic
 {
+    
     dispatch_async(bt_write_dispatch_queue, ^{
         [self.connectedPeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
     });
@@ -1688,6 +1708,21 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         [self.penCommParser setPenStateWithAutoPwrOffTime:autoPwrOff];
     }
 }
+
+- (void)setPenStateWithPencap:(UInt8)pencap
+{
+    if (self.isPenSDK2) {
+        [self.penCommParser setPenState2WithPencap:pencap];
+    }
+}
+
+- (void)setPenStateWithAutoPwrOff:(UInt8)autoPwrOff
+{
+    if (self.isPenSDK2) {
+        [self.penCommParser setPenState2WithAutoPwrOff:autoPwrOff];
+    }
+}
+
 - (void)setPenStateAutoPower:(unsigned char)autoPower Sound:(unsigned char)sound
 {
     if (self.isPenSDK2) {

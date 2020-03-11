@@ -15,12 +15,15 @@
 #define kViewTag			1
 #define kAlertViewPenInfo 3
 
+#define kPenCapViewTag            5
+
 static NSString *kSectionTitleKey = @"sectionTitleKey";
 static NSString *kRow1LabelKey = @"row1LabelKey";
 static NSString *kRow2LabelKey = @"row2LabelKey";
 static NSString *kRow3LabelKey = @"row3LabelKey";
 static NSString *kRow4LabelKey = @"row4LabelKey";
 static NSString *kRow5LabelKey = @"row5LabelKey";
+static NSString *kRow6LabelKey = @"row6LabelKey";
 static NSString *kRow1DetailLabelKey = @"row1DetailLabelKey";
 static NSString *kRow2DetailLabelKey = @"row2DetailLabelKey";
 static NSString *kRow1SourceKey = @"row1SourceKey";
@@ -50,11 +53,12 @@ static NSString *kSourceCellId = @"SourceCell";
 
 @end
 
-@interface NJPenInfoViewController ()
+@interface NJPenInfoViewController () <NJPenStatusDelegate, NJPenStatusVer2Delegate>
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *menuList;
 @property (nonatomic, strong) UISwitch *pSwitchCtl;
 @property (nonatomic, strong) UISwitch *dSwitchCtl;
+@property (nonatomic, strong) UISwitch *penCapSwitchCtl;
 @property (nonatomic) BOOL _penConnected;
 @property (nonatomic, strong) NJPenCommManager *pencommManager;
 @end
@@ -111,18 +115,22 @@ static NSString *kSourceCellId = @"SourceCell";
     NJChangePasswordViewController *changePasswordViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"changePWVC"];
     NJPenAutoPwrOffTimeViewController *penAutoPwrOffTimeViewController = [[NJPenAutoPwrOffTimeViewController alloc] initWithNibName:nil bundle:nil];
     NJPenSensorCalViewController *penSensorCalViewController = [[NJPenSensorCalViewController alloc] initWithNibName:nil bundle:nil];
+    
+    
     [self.menuList addObject:@{ kSectionTitleKey:NSLocalizedString(@"Setting", @""),
                                 kRow1LabelKey:NSLocalizedString(@"Change Password", @""),
                                 kRow2LabelKey:NSLocalizedString(@"Auto Power", @""),
                                 kRow3LabelKey:NSLocalizedString(@"Shutdown Timer", @""),
                                 kRow4LabelKey:NSLocalizedString(@"Sound", @""),
                                 kRow5LabelKey:NSLocalizedString(@"Pen Sensor Pressure Tuning", @""),
+                                kRow6LabelKey:@"Pen Cap",
                                 kRow1SourceKey:NSLocalizedString(@"Power on Automatically", @""),
                                 kRow2SourceKey:NSLocalizedString(@"Save battery without using pen", @""),
                                 kRow3SourceKey:NSLocalizedString(@"Alarm in a new event or warning", @""),
                                 kRow4SourceKey:NSLocalizedString(@"Pen Pressure Cal Descript", @""),
                                 kRow1ViewKey:self.pSwitchCtl,
                                 kRow2ViewKey:self.dSwitchCtl,
+                                kRow3ViewKey:self.penCapSwitchCtl,
                                 kViewController1Key:changePasswordViewController,
                                 kViewController2Key:penAutoPwrOffTimeViewController,
                                 kViewController3Key:penSensorCalViewController }];
@@ -132,6 +140,9 @@ static NSString *kSourceCellId = @"SourceCell";
     self.tableView.frame = self.view.bounds;
     [self.view addSubview:self.tableView];
     
+    [[NJPenCommManager sharedInstance] setPenStatusDelegate:self];
+    [[NJPenCommManager sharedInstance] setPenStatusVer2Delegate:self];
+    [[NJPenCommManager sharedInstance] setPenState];
 }
 
 #pragma mark - UIViewController delegate
@@ -184,7 +195,7 @@ static NSString *kSourceCellId = @"SourceCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -241,6 +252,8 @@ static NSString *kSourceCellId = @"SourceCell";
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        NSLog(@"kTitleKey : key:%@, indexpath %ld: %@", [NSString stringWithFormat:@"row%dLabelKey",(int)([indexPath row] + 1)], (long)indexPath.row, [[self.menuList objectAtIndex:0] valueForKey:kTitleKey]);
+        
         NSString *kViewKey;
         if ([indexPath row] == 1) {
             kViewKey = [NSString stringWithFormat:@"row%dViewKey",(int)[indexPath row]];
@@ -248,6 +261,8 @@ static NSString *kSourceCellId = @"SourceCell";
             kViewKey = [NSString stringWithFormat:@"row%dViewKey",(int)([indexPath row]-1)];
         }else if (([indexPath row] == 2) || ([indexPath row] == 4)) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if ([indexPath row] == 5) {
+            kViewKey = @"row3ViewKey";
         }
         UIControl *control = [[self.menuList objectAtIndex:0] valueForKey:kViewKey];
         
@@ -318,20 +333,22 @@ static NSString *kSourceCellId = @"SourceCell";
 {
     if (_pSwitchCtl == nil)
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         CGRect frame = CGRectMake(239.0, 12.0, 66.0, 32.0);
         _pSwitchCtl = [[UISwitch alloc] initWithFrame:frame];
-        [_pSwitchCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-        
+//        [_pSwitchCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+   
+        [_pSwitchCtl addTarget:self action:@selector(autoPowerOnSwitchAction:) forControlEvents:UIControlEventValueChanged];
+
         // in case the parent view draws with a custom color or gradient, use a transparent color
-        BOOL penAutoPower = [defaults boolForKey:@"penAutoPower"];
-        
-        if (penAutoPower) {
-            [_pSwitchCtl setOn:YES];
-        } else {
-            [_pSwitchCtl setOn:NO];
-        }
+//        BOOL penAutoPower = [defaults boolForKey:@"penAutoPower"];
+//
+//        if (penAutoPower) {
+//            [_pSwitchCtl setOn:YES];
+//        } else {
+//            [_pSwitchCtl setOn:NO];
+//        }
         
         _pSwitchCtl.backgroundColor = [UIColor clearColor];
         
@@ -364,6 +381,32 @@ static NSString *kSourceCellId = @"SourceCell";
         _dSwitchCtl.tag = kViewTag;
     }
     return _dSwitchCtl;
+}
+
+- (UISwitch *)penCapSwitchCtl
+{
+    if (_penCapSwitchCtl == nil)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        CGRect frame = CGRectMake(239.0, 12.0, 66.0, 32.0);
+        _penCapSwitchCtl = [[UISwitch alloc] initWithFrame:frame];
+        [_penCapSwitchCtl addTarget:self action:@selector(penCapSwitchAction:) forControlEvents:UIControlEventValueChanged];
+        
+        // in case the parent view draws with a custom color or gradient, use a transparent color
+        _penCapSwitchCtl.backgroundColor = [UIColor clearColor];
+        
+        BOOL penCap = [defaults boolForKey:@"penCap"];
+
+        if (penCap) {
+            [_penCapSwitchCtl setOn:YES];
+        } else {
+            [_penCapSwitchCtl setOn:NO];
+        }
+
+        _penCapSwitchCtl.tag = kPenCapViewTag;
+    }
+    return _penCapSwitchCtl;
 }
 
 #define ON 1
@@ -449,9 +492,64 @@ static NSString *kSourceCellId = @"SourceCell";
     return;
 }
 
+- (void)penCapSwitchAction:(id)sender
+{
+    BOOL penConnected = [NJPenCommManager sharedInstance].isPenConnected;
+    BOOL penRegister = [NJPenCommManager sharedInstance].hasPenRegistered;
+    
+    if (!penConnected || !penRegister) {
+        return;
+    }
+    
+    if ([sender isOn]) {
+        [[NJPenCommManager sharedInstance] setPenStateWithPencap:1];
+    } else {
+        [[NJPenCommManager sharedInstance] setPenStateWithPencap:0];
+    }
+}
+
+- (void)autoPowerOnSwitchAction:(id)sender
+{
+    BOOL penConnected = [NJPenCommManager sharedInstance].isPenConnected;
+    BOOL penRegister = [NJPenCommManager sharedInstance].hasPenRegistered;
+    
+    if (!penConnected || !penRegister) {
+        return;
+    }
+    
+    if ([sender isOn]) {
+        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwrOff:1];
+    } else {
+        [[NJPenCommManager sharedInstance] setPenStateWithAutoPwrOff:0];
+    }
+}
+
 - (void)startStopAdvertizing:(id)sender
 {
     
+}
+
+- (void) penStatusData:(PenStateStruct *)data
+{
+
+}
+
+- (void) penStatusVer2Data:(PenState2Struct *)data
+{
+    NSLog(@"usePenCapOnOff :  %u", data->usePenCapOnOff);
+    NSLog(@"usePenTipOnOff :  %u", data->usePenTipOnOff);
+    
+    if (data->usePenCapOnOff == 1) {
+        self.penCapSwitchCtl.on = YES;
+    } else {
+        self.penCapSwitchCtl.on = NO;
+    }
+    
+    if (data->usePenTipOnOff == 1) {
+        self.pSwitchCtl.on = YES;
+    } else {
+        self.pSwitchCtl.on = NO;
+    }
 }
 
 @end

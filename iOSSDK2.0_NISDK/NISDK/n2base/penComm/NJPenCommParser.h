@@ -49,6 +49,8 @@ typedef void(^BATTERYMEMORY_BLOCK)(unsigned char remainedBattery, unsigned char 
 @protocol NJPenStatusDelegate;
 @protocol NJPenPasswordDelegate;
 @protocol NJPenStartDelegate;
+@protocol NJPenStatusVer2Delegate;
+
 
 @interface NJPenCommParser : NSObject
 @property (weak, nonatomic) id <NJPenCommParserStrokeHandler> strokeHandler;
@@ -100,6 +102,7 @@ typedef void(^BATTERYMEMORY_BLOCK)(unsigned char remainedBattery, unsigned char 
 - (void) setPenState;
 - (void)setPenStateWithPenPressure:(UInt16)penPressure;
 - (void)setPenStateWithAutoPwrOffTime:(UInt16)autoPwrOff;
+
 - (void)setPenStateAutoPower:(unsigned char)autoPower Sound:(unsigned char)sound;
 - (void)setPenStateWithRGB:(UInt32)color;
 - (void)setPenStateWithTimeTick;
@@ -145,5 +148,10 @@ typedef void(^BATTERYMEMORY_BLOCK)(unsigned char remainedBattery, unsigned char 
 - (BOOL)requestOfflinePageListSectionOwnerId:(UInt32) sectionOwnerId AndNoteId:(UInt32) noteId;
 - (BOOL) requestOfflineData2WithOwnerId:(UInt32)ownerId noteId:(UInt32)noteId pageId:(NSMutableArray *)pagesArray;
 - (BOOL) sendUpdateFileInfo2AtUrl:(NSURL *)fileUrl;
+
+// 추가
+- (void) setPenState2WithPencap:(UInt8)pencap;
+- (void) setPenState2WithAutoPwrOff:(UInt8)autoPwrOff;
+- (void) setPenStatusVer2Delegate:(id<NJPenStatusVer2Delegate>)penStatusVer2Delegate;
 
 @end

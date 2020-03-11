@@ -229,6 +229,7 @@
 				23CD8D141A36D10500677BAF /* NEO1_.zip */,
 				234C4EE81A2C050000093438 /* n2base */,
 				234C4ECD1A2C035700093438 /* NISDK.h */,
+				234C4EDB1A2C035700093438 /* Info.plist */,
 			);
 			path = NISDK;
 			sourceTree = "<group>";
@@ -244,7 +245,6 @@
 		234C4EDA1A2C035700093438 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				234C4EDB1A2C035700093438 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -456,6 +456,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 234C4EC11A2C035700093438;

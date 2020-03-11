@@ -211,6 +211,7 @@ typedef struct __attribute__((packed)){
     UInt16 penPressure;
     unsigned char reserved[11];
 } PenStateStruct;
+
 typedef struct __attribute__((packed)){
 	int32_t timezoneOffset;
 	UInt64 timeTick;

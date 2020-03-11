@@ -132,10 +132,14 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     OffLineData2DotStruct offline2DotData0, offline2DotData1, offline2DotData2;
     OFFLINE_DOT_CHECK_STATE offlineDotCheckState;
 }
+
 @property (weak, nonatomic) id<NJOfflineDataDelegate> offlineDataDelegate;
 @property (weak, nonatomic) id<NJPenCalibrationDelegate> penCalibrationDelegate;
 @property (weak, nonatomic) id<NJFWUpdateDelegate> fwUpdateDelegate;
 @property (weak, nonatomic) id<NJPenStatusDelegate> penStatusDelegate;
+// 추가
+@property (weak, nonatomic) id<NJPenStatusVer2Delegate> penStatusVer2Delegate;
+
 @property (weak, nonatomic) id<NJPenPasswordDelegate> penPasswordDelegate;
 @property (nonatomic) BOOL penDown;
 @property (strong, nonatomic) NSMutableArray *nodes;
@@ -534,6 +538,20 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     unsigned char char0, char1, char2, char3;
     
     if (packetData.length < 1) return;
+    
+    // 주석처리
+     // ----------------------------------------------------------------------------------------
+//    NSUInteger capacity = packetData.length * 2;
+//    NSMutableString *sbuf = [NSMutableString stringWithCapacity:capacity];
+//    const unsigned char *buf = packetData.bytes;
+//    NSInteger i;
+//    for (i=0; i<packetData.length; ++i) {
+//        [sbuf appendFormat:@"%02lX", (unsigned long)buf[i]];
+//    }
+//    NSLog(@"-------------------------------------------------------");
+//    NSLog(@"data : %@", sbuf);
+//    NSLog(@"-------------------------------------------------------");
+    // ----------------------------------------------------------------------------------------
     
     range.location = dataPosition;
     range.length = 1;
@@ -1926,10 +1944,16 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
 {
     _fwUpdateDelegate = fwUpdateDelegate;
 }
-- (void) setPenStatusDelegate:(id<NJPenStatusDelegate>)penStatusDelegate;
+- (void) setPenStatusDelegate:(id<NJPenStatusDelegate>)penStatusDelegate
 {
     _penStatusDelegate = penStatusDelegate;
 }
+
+- (void) setPenStatusVer2Delegate:(id<NJPenStatusVer2Delegate>)penStatusVer2Delegate
+{
+    _penStatusVer2Delegate = penStatusVer2Delegate;
+}
+
 - (void) setPenPasswordDelegate:(id<NJPenPasswordDelegate>)penPasswordDelegate;
 {
     _penPasswordDelegate = penPasswordDelegate;
@@ -2413,6 +2437,10 @@ NSString * NJPenCommManagerWriteIdleNotification = @"NJPenCommManagerWriteIdleNo
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.penStatusDelegate penStatusData:self.penStatus];
+        if (self.penStatusVer2Delegate != nil) {
+             [self.penStatusVer2Delegate penStatusVer2Data:self.penStatus2];
+        }
+//
     });
 
     if (self.battMemoryBlock != nil) {
@@ -3551,6 +3579,104 @@ static int length4Speed;
     NSLog(@"setPenState2WithTypeAndHover 0x5 data %@", data);
     [_commManager writePen2SetData:data];
     
+}
+
+- (void)setPenState2WithPencap:(UInt8)pencap
+{
+    UInt8  sof, cmd, eof, type; UInt16 length;
+    unsigned char dleData[1]; unsigned char packetData[1];
+    
+    NSMutableData *tempPacketData = [[NSMutableData alloc] init];
+    NSMutableData *filteredPacketData = [[NSMutableData alloc] init];
+    NSMutableData *wholePacketData = [[NSMutableData alloc] init];
+    
+    cmd = 0x05;
+    [tempPacketData appendBytes:&cmd length:sizeof(UInt8)];
+    
+    length = sizeof(type) + sizeof(pencap);
+    [tempPacketData appendBytes:&length length:sizeof(UInt16)];
+    
+    type = 3;
+    [tempPacketData appendBytes:&type length:sizeof(UInt8)];
+    
+    [tempPacketData appendBytes:&pencap length:sizeof(UInt8)];
+    
+    unsigned char *tempDataBytes = (unsigned char *)[tempPacketData bytes];
+    
+    for ( int i =0 ; i < tempPacketData.length; i++){
+        
+        int int_data = (int) (tempDataBytes[0] & 0xFF);
+        if ((int_data == PACKET_START) || (int_data == PACKET_END) || (int_data == PACKET_DLE)) {
+            dleData[0] = PACKET_DLE;
+            [filteredPacketData appendBytes:dleData length:sizeof(unsigned char)];
+            packetData[0] = tempDataBytes[0] ^ 0x20;
+            [filteredPacketData appendBytes:packetData length:sizeof(unsigned char)];
+        } else {
+            [filteredPacketData appendBytes:tempDataBytes length:sizeof(unsigned char)];
+        }
+        tempDataBytes = tempDataBytes + 1;
+    }
+    
+    sof = PACKET_START;
+    [wholePacketData appendBytes:&sof length:sizeof(UInt8)];
+    
+    [wholePacketData appendBytes:[filteredPacketData bytes] length:filteredPacketData.length];
+    
+    eof = PACKET_END;
+    [wholePacketData appendBytes:&eof length:sizeof(UInt8)];
+    
+    NSData *data = [NSData dataWithData:wholePacketData];
+    NSLog(@"setPenState2WithTypeAndHover 0x5 data %@", data);
+    [_commManager writePen2SetData:data];
+}
+
+- (void)setPenState2WithAutoPwrOff:(UInt8)autoPwrOff
+{
+    UInt8  sof, cmd, eof, type; UInt16 length;
+    unsigned char dleData[1]; unsigned char packetData[1];
+    
+    NSMutableData *tempPacketData = [[NSMutableData alloc] init];
+    NSMutableData *filteredPacketData = [[NSMutableData alloc] init];
+    NSMutableData *wholePacketData = [[NSMutableData alloc] init];
+    
+    cmd = 0x05;
+    [tempPacketData appendBytes:&cmd length:sizeof(UInt8)];
+    
+    length = sizeof(type) + sizeof(autoPwrOff);
+    [tempPacketData appendBytes:&length length:sizeof(UInt16)];
+    
+    type = 4;
+    [tempPacketData appendBytes:&type length:sizeof(UInt8)];
+    
+    [tempPacketData appendBytes:&autoPwrOff length:sizeof(UInt8)];
+    
+    unsigned char *tempDataBytes = (unsigned char *)[tempPacketData bytes];
+    
+    for ( int i =0 ; i < tempPacketData.length; i++){
+        
+        int int_data = (int) (tempDataBytes[0] & 0xFF);
+        if ((int_data == PACKET_START) || (int_data == PACKET_END) || (int_data == PACKET_DLE)) {
+            dleData[0] = PACKET_DLE;
+            [filteredPacketData appendBytes:dleData length:sizeof(unsigned char)];
+            packetData[0] = tempDataBytes[0] ^ 0x20;
+            [filteredPacketData appendBytes:packetData length:sizeof(unsigned char)];
+        } else {
+            [filteredPacketData appendBytes:tempDataBytes length:sizeof(unsigned char)];
+        }
+        tempDataBytes = tempDataBytes + 1;
+    }
+    
+    sof = PACKET_START;
+    [wholePacketData appendBytes:&sof length:sizeof(UInt8)];
+    
+    [wholePacketData appendBytes:[filteredPacketData bytes] length:filteredPacketData.length];
+    
+    eof = PACKET_END;
+    [wholePacketData appendBytes:&eof length:sizeof(UInt8)];
+    
+    NSData *data = [NSData dataWithData:wholePacketData];
+    NSLog(@"setPenState2WithTypeAndHover 0x5 data %@", data);
+    [_commManager writePen2SetData:data];
 }
 
 - (void)setAllNoteIdList2

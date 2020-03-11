@@ -64,6 +64,11 @@ typedef enum {
 - (void) penStatusData:(PenStateStruct *)data;
 @end
 
+// 추가
+@protocol NJPenStatusVer2Delegate <NSObject>
+- (void) penStatusVer2Data:(PenState2Struct *)data;
+@end
+
 @protocol NJPenPasswordDelegate <NSObject>
 - (void) penPasswordRequest:(PenPasswordRequestStruct *)data;
 @end
@@ -113,7 +118,7 @@ typedef enum {
 
 + (NJPenCommManager *) sharedInstance;
 - (void) setPenCommParserStrokeHandler:(id<NJPenCommParserStrokeHandler>)strokeHandler;
-- (void)setPenCommParserCommandHandler:(id<NJPenCommParserCommandHandler>)commandHandler;
+- (void) setPenCommParserCommandHandler:(id<NJPenCommParserCommandHandler>)commandHandler;
 - (void) setPenCommParserPasswordDelegate:(id<NJPenCommParserPasswordDelegate>)delegate;
 - (void) setPenCommParserStartDelegate:(id<NJPenCommParserStartDelegate>)delegate;
 - (void) setOfflineDataDelegate:(id)offlineDataDelegate;
@@ -128,17 +133,22 @@ typedef enum {
 - (void) btStop;
 - (void) disConnect;
 - (void) setPenState;
-- (void)setNoteIdListFromPList;
-- (void)setAllNoteIdList;
-- (void)setNoteIdListSectionOwnerFromPList;
-- (void)setPenStateWithRGB:(UInt32)color;
-- (void)setPenThickness:(NSUInteger)thickness;
-- (void)setPenStateWithPenPressure:(UInt16)penPressure;
-- (void)setPenStateWithAutoPwrOffTime:(UInt16)autoPwrOff;
-- (void)setPenStateAutoPower:(unsigned char)autoPower Sound:(unsigned char)sound;
-- (void)requestNewPageNotification;
-- (void)cancelNewPageNotification;
-- (void)setBTIDForPenConnection:(NSArray *)btIDList;
+- (void) setNoteIdListFromPList;
+- (void) setAllNoteIdList;
+- (void) setNoteIdListSectionOwnerFromPList;
+- (void) setPenStateWithRGB:(UInt32)color;
+- (void) setPenThickness:(NSUInteger)thickness;
+- (void) setPenStateWithPenPressure:(UInt16)penPressure;
+- (void) setPenStateWithAutoPwrOffTime:(UInt16)autoPwrOff;
+- (void) setPenStateAutoPower:(unsigned char)autoPower Sound:(unsigned char)sound;
+- (void) requestNewPageNotification;
+- (void) cancelNewPageNotification;
+- (void) setBTIDForPenConnection:(NSArray *)btIDList;
+
+// 추가 2.0 버전만 지원
+- (void) setPenStateWithPencap:(UInt8)pencap;
+- (void) setPenStateWithAutoPwrOff:(UInt8)autoPwrOff;
+- (void) setPenStatusVer2Delegate:(id<NJPenStatusVer2Delegate>)penStatusVer2Delegate;
 
 //NISDK
 - (void)setPenStateWithTimeTick;

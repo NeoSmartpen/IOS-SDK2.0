@@ -21,6 +21,7 @@ static NSString *kRow2LabelKey = @"row2LabelKey";
 static NSString *kRow3LabelKey = @"row3LabelKey";
 static NSString *kRow4LabelKey = @"row4LabelKey";
 static NSString *kRow5LabelKey = @"row5LabelKey";
+static NSString *kRow6LabelKey = @"row6LabelKey";
 
 static NSString *kCheckCellID = @"kCheckCellID";
 static NSString *kSourceCellID = @"SourceCellID";
