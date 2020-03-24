@@ -28,6 +28,15 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 
 @interface NJPenCommManager() <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (strong, nonatomic) NSMutableData         *data;
+
+// Pen v5 SDK2.0 Service
+@property (strong, nonatomic) CBService *pen5Service;
+@property (strong, nonatomic) CBUUID *neoPen5ServiceUuid;
+@property (strong, nonatomic) CBUUID *neoPen5SystemServiceUuid;
+@property (strong, nonatomic) CBUUID *pen5DataUuid;
+@property (strong, nonatomic) CBUUID *pen5SetDataUuid;
+@property (strong, nonatomic) NSArray *pen5Characteristics;
+
 // Pen SDK2.0 Service
 @property (strong, nonatomic) CBUUID *neoPen2ServiceUuid;
 @property (strong, nonatomic) CBUUID *neoPen2SystemServiceUuid;
@@ -38,6 +47,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
 @property (strong, nonatomic) CBCharacteristic *pen2SetDataCharacteristic;
 // Pen Servce
 @property (strong, nonatomic) CBUUID *neoPenServiceUuid;
+
 @property (strong, nonatomic) CBUUID *strokeDataUuid;
 @property (strong, nonatomic) CBUUID *updownDataUuid;
 @property (strong, nonatomic) CBUUID *idDataUuid;
@@ -174,6 +184,13 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     self=[super init];
     if (!self) return nil;
     
+    // Pen Service 5
+    self.neoPen5ServiceUuid = [CBUUID UUIDWithString:NEO_PEN5_SERVICE_UUID];
+    self.neoPen5SystemServiceUuid = [CBUUID UUIDWithString:NEO_PEN5_SYSTEM_SERVICE_UUID];
+    self.pen5DataUuid = [CBUUID UUIDWithString:PEN5_DATA_UUID];
+    self.pen5SetDataUuid = [CBUUID UUIDWithString:PEN5_SET_DATA_UUID];
+    self.pen5Characteristics = @[self.pen5DataUuid, self.pen5SetDataUuid];
+    
     self.neoPen2ServiceUuid = [CBUUID UUIDWithString:NEO_PEN2_SERVICE_UUID];
     self.neoPen2SystemServiceUuid = [CBUUID UUIDWithString:NEO_PEN2_SYSTEM_SERVICE_UUID];
     self.pen2DataUuid = [CBUUID UUIDWithString:PEN2_DATA_UUID];
@@ -181,6 +198,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     self.pen2Characteristics = @[self.pen2DataUuid, self.pen2SetDataUuid];
     
     self.neoPenServiceUuid = [CBUUID UUIDWithString:NEO_PEN_SERVICE_UUID];
+    
     self.strokeDataUuid = [CBUUID UUIDWithString:STROKE_DATA_UUID];
     self.updownDataUuid = [CBUUID UUIDWithString:UPDOWN_DATA_UUID];
     self.idDataUuid = [CBUUID UUIDWithString:ID_DATA_UUID];
@@ -235,7 +253,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     self.fwVersionUuid = [CBUUID UUIDWithString:FW_VERSION_UUID];
     self.deviceInfoCharacteristics = @[self.fwVersionUuid];
     
-    self.supportedServices = @[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid, self.neoOfflineDataServiceUuid, self.neoOffline2DataServiceUuid, self.neoUpdateServiceUuid, self.neoDeviceInfoServiceUuid, self.neoSystem2ServiceUuid];
+    self.supportedServices = @[self.neoPen5ServiceUuid, self.neoPen5SystemServiceUuid, self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid, self.neoOfflineDataServiceUuid, self.neoOffline2DataServiceUuid, self.neoUpdateServiceUuid, self.neoDeviceInfoServiceUuid, self.neoSystem2ServiceUuid];
     
     self.selectedIndex = -1;
     self.hasStrokeHandler = NO;
@@ -503,7 +521,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         if((self.penConnectionStatus == NJPenCommManPenConnectionStatusNone) || (self.penConnectionStatus == NJPenCommManPenConnectionStatusDisconnected)) {
             self.penConnectionStatus = NJPenCommManPenConnectionStatusNone;
 #ifdef SUPPORT_SDK2
-            connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid]];
+            connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPen5ServiceUuid, self.neoPen5SystemServiceUuid, self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid]];
 #else
             connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPenServiceUuid, self.neoSystemServiceUuid]];
 #endif
@@ -532,7 +550,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         if((self.penConnectionStatus == NJPenCommManPenConnectionStatusNone) || (self.penConnectionStatus == NJPenCommManPenConnectionStatusDisconnected)) {
             self.penConnectionStatus = NJPenCommManPenConnectionStatusNone;
 #ifdef SUPPORT_SDK2
-            connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid]];
+            connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPen5ServiceUuid, self.neoPen5SystemServiceUuid, self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoPenServiceUuid, self.neoSystemServiceUuid]];
 #else
             connectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:@[self.neoPenServiceUuid, self.neoSystemServiceUuid]];
 #endif
@@ -650,7 +668,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     
     if (self.hasPenRegistered) {
 #ifdef SUPPORT_SDK2
-        [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPenServiceUuid]
+        [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPenServiceUuid, self.neoPen5ServiceUuid]
                                                     options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
 #else
         [self.centralManager scanForPeripheralsWithServices:@[self.neoPenServiceUuid]
@@ -659,7 +677,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         [self startScanTimer:3.0f];
     }else{
 #ifdef SUPPORT_SDK2
-        [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid]
+        [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid, self.neoPen5SystemServiceUuid]
                                                     options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
 #else
         [self.centralManager scanForPeripheralsWithServices:@[self.neoSystemServiceUuid]
@@ -688,7 +706,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     
     self.hasPenRegistered = YES;
 #ifdef SUPPORT_SDK2
-    [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPenServiceUuid]
+    [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2ServiceUuid, self.neoPenServiceUuid, self.neoPen5ServiceUuid]
                                                 options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
 #else
     [self.centralManager scanForPeripheralsWithServices:@[self.neoPenServiceUuid]
@@ -706,7 +724,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         
         unsigned const char* bytes = [data bytes];
         NSMutableString *macAddrStr = [NSMutableString stringWithCapacity:[data length]];
-        [macAddrStr appendString:@"0x"];
+        [macAddrStr appendString:@""];
         for (int i=0; i < [data length]; i++) {
             [macAddrStr appendFormat:@"%02x", bytes[i]];
         }
@@ -749,7 +767,8 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         
         // if the peripheral has no pen service --> ignore the peripheral
 #ifdef SUPPORT_SDK2
-        if(!([serviceUUIDs containsObject:self.neoPen2ServiceUuid] || [serviceUUIDs containsObject:self.neoPenServiceUuid])) return;
+        if(!([serviceUUIDs containsObject:self.neoPen2ServiceUuid] || [serviceUUIDs containsObject:self.neoPenServiceUuid] || [serviceUUIDs containsObject:self.neoPen5ServiceUuid])) return;
+        
 #else
         if(![serviceUUIDs containsObject:self.neoPenServiceUuid]) return;
 #endif
@@ -765,6 +784,9 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
             if ([serviceUUIDs containsObject:self.neoPenServiceUuid]) {
                 [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPenServiceUuid]];
                 NSLog(@"found service 18F1");
+            } else if ([serviceUUIDs containsObject:self.neoPen5ServiceUuid]) {
+                [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen5ServiceUuid]];
+                NSLog(@"found service %@", self.neoPen5ServiceUuid);
             } else {
                 [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2ServiceUuid]];
                 NSLog(@"found service 19F1");
@@ -780,7 +802,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     } else {
         // if the peripheral has no pen service --> ignore the peripheral
 #ifdef SUPPORT_SDK2
-        if(!([serviceUUIDs containsObject:self.neoSystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen2SystemServiceUuid])) return;
+        if(!([serviceUUIDs containsObject:self.neoSystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen2SystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen5SystemServiceUuid])) return;
 #else
         if(![serviceUUIDs containsObject:self.neoSystemServiceUuid]) return;
 #endif
@@ -795,9 +817,12 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
             if ([serviceUUIDs containsObject:self.neoSystemServiceUuid]) {
                 [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoSystemServiceUuid]];
                 NSLog(@"found service 18F5");
+            } else if ([serviceUUIDs containsObject:self.neoPen5SystemServiceUuid]) {
+                    [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen5SystemServiceUuid]];
+                    NSLog(@"found service %@", self.neoPen5SystemServiceUuid);
             } else {
                 [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2SystemServiceUuid]];
-                NSLog(@"found service 19F0");
+                NSLog(@"found service %@", self.neoPen2SystemServiceUuid);
             }
 #else
             [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoSystemServiceUuid]];
@@ -873,14 +898,32 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         // we have registration
         // check if stored regUuid is MAC or UUID
         NSLog(@"[selectRSSI] already registred now trying to connect to pen....");
-        if(self.regUuid.length <= 15) {
+        NSLog(@"[selectRSSI] self.regUuid : %@", self.regUuid);
+        NSLog(@"[selectRSSI] self.regUuid.length : %lu", (unsigned long)self.regUuid.length);
+        if(self.regUuid.length <= 22) {
             // 1. MAC address --> try new method
             for (int i = 0; i < noPeripherals; i++) {
                 NSString *uid = [self.macArray objectAtIndex:i];
+                NSLog(@"[selectRSSI] mac uid : %@", uid);
+                NSLog(@"[selectRSSI] uid.length : %lu", (unsigned long)uid.length);
                 if ([self.regUuid isEqualToString:uid]) {
                     NSLog(@"[selectRSSI] connecting pen by using MAC....");
                     [self connectPeripheralAt:i];
                     return;
+                } else {
+                    // F30일 경우 14번째 바이트만 다르다.
+                    if (self.pen5Service != nil) {
+                        NSString *newUid  = [uid substringToIndex:12];
+                        NSString *newRegUuid  = [self.regUuid substringToIndex:12];
+                        
+                        NSLog(@"[selectRSSI] newUid : %@", newUid);
+                        NSLog(@"[selectRSSI] newRegUuid : %@", newRegUuid);
+                        if ([newRegUuid isEqualToString:newUid]) {
+                            NSLog(@"[selectRSSI] connecting pen by using MAC....");
+                            [self connectPeripheralAt:i];
+                            return;
+                        }
+                    }
                 }
             }
         } else {
@@ -938,7 +981,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
             NSString *pName = [foundPeripheral.name uppercaseString];
             
 #ifdef SUPPORT_SDK2
-            if ([serviceUUID isEqualToString:@"19F0"] || [serviceUUID isEqualToString:@"19F1"]) {
+            if ([serviceUUID isEqualToString:@"19F0"] || [serviceUUID isEqualToString:@"19F1"] || [serviceUUID isEqualToString:NEO_PEN5_SERVICE_UUID] || [serviceUUID isEqualToString:NEO_PEN5_SYSTEM_SERVICE_UUID]) {
                 self.isPenSDK2 = YES;
                 NSLog(@"PenSDK2.0 Pen registered");
             } else {
@@ -1066,11 +1109,20 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
           
             [peripheral discoverCharacteristics:self.pen2Characteristics forService:service];
         }
+        else if ([[[service UUID] UUIDString] isEqualToString:NEO_PEN5_SERVICE_UUID]) {
+            self.pen5Service = service;
+          
+            [peripheral discoverCharacteristics:self.pen5Characteristics forService:service];
+        }
         else if ([[[service UUID] UUIDString] isEqualToString:NEO_SYSTEM_SERVICE_UUID]) {
             self.systemService = service;
             [peripheral discoverCharacteristics:self.systemCharacteristics forService:service];
         }
         else if ([[[service UUID] UUIDString] isEqualToString:NEO_SYSTEM2_SERVICE_UUID]) {
+            self.system2Service = service;
+            [peripheral discoverCharacteristics:self.system2Characteristics forService:service];
+        }
+        else if ([[[service UUID] UUIDString] isEqualToString:NEO_PEN5_SYSTEM_SERVICE_UUID]) {
             self.system2Service = service;
             [peripheral discoverCharacteristics:self.system2Characteristics forService:service];
         }
@@ -1114,16 +1166,16 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         [self cleanup];
         return;
     }
-    if (service == self.pen2Service) {
+    if (service == self.pen2Service || service == self.pen5Service) {
         // Again, we loop through the array, just in case.
         for (CBCharacteristic *characteristic in service.characteristics) {
             // And check if it's the right one
-            if ([self.pen2Characteristics containsObject:characteristic.UUID]) {
-                if ([[characteristic UUID] isEqual:self.pen2DataUuid]) {
+            if ([self.pen2Characteristics containsObject:characteristic.UUID] || [self.pen5Characteristics containsObject:characteristic.UUID]) {
+                if ([[characteristic UUID] isEqual:self.pen2DataUuid] || [[characteristic UUID] isEqual:self.pen5DataUuid]) {
                     //NSLog(@"pen2DataUuid");
                     [peripheral setNotifyValue:YES forCharacteristic:characteristic];
                 }
-                else if([[characteristic UUID] isEqual:self.pen2SetDataUuid]) {
+                else if([[characteristic UUID] isEqual:self.pen2SetDataUuid] || [[characteristic UUID] isEqual:self.pen5SetDataUuid]) {
                     //NSLog(@"pen2SetDataUuid");
                     self.pen2SetDataCharacteristic = characteristic;
 
@@ -1360,7 +1412,7 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     NSData* received_data = characteristic.value;
     int dataLength = (int)[received_data length];
     unsigned char *packet = (unsigned char *) [received_data bytes];
-    if([ characteristic.UUID isEqual: self.pen2DataUuid] )
+    if([ characteristic.UUID isEqual: self.pen2DataUuid] || [characteristic.UUID isEqual: self.pen5DataUuid])
     {
         //NSLog(@"Received: pen2DataUuid data");
         [self.penCommParser parsePen2Data:packet withLength:dataLength];

@@ -1,6 +1,15 @@
 #import "NPNotebookInfo.h"
 #import "NPPaperInfo.h"
 #import "NPPUIInfo.h"
+
+
+/* Pen5.0 Service UUID
+ */
+#define NEO_PEN5_SERVICE_UUID               @"4F99F138-9D53-5BFA-9E50-B147491AFE68"
+#define NEO_PEN5_SYSTEM_SERVICE_UUID        @"4F99F138-9D53-5BFA-9E50-B147491AFE68"
+#define PEN5_DATA_UUID                      @"64CD86B1-2256-5AEB-9F04-2CAF6C60AE57"
+#define PEN5_SET_DATA_UUID                  @"8BC8CC7D-88CA-56B0-AF9A-9BF514D0D61A"
+
 /* Pen2.0 Service UUID
  */
 #define NEO_PEN2_SERVICE_UUID  @"19F1"
@@ -11,6 +20,7 @@
 /* Pen Service UUID
  */
 #define NEO_PEN_SERVICE_UUID    @"18F1"
+
 #define STROKE_DATA_UUID        @"2AA0"
 #define ID_DATA_UUID            @"2AA1"
 #define UPDOWN_DATA_UUID        @"2AA2"

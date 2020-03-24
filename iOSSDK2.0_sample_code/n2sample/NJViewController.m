@@ -399,7 +399,8 @@ typedef enum{
             // 1.try macAddr first
          foundPeripheral = self.discoveredPeripherals[0];
          penName = foundPeripheral.name;
-        if ([serviceUUID isEqualToString:@"19F0"] || [serviceUUID isEqualToString:@"19F1"]) {
+        NSLog(@"foundPeripheral penName : %@", penName);
+        if ([serviceUUID isEqualToString:@"19F0"] || [serviceUUID isEqualToString:@"19F1"] || [serviceUUID isEqualToString:NEO_PEN5_SERVICE_UUID] || [serviceUUID isEqualToString:NEO_PEN5_SYSTEM_SERVICE_UUID]) {
             pencommManager.isPenSDK2 = YES;
             NSLog(@"Pen SDK2.0");
         } else {
