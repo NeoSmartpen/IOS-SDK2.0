@@ -677,7 +677,8 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         [self startScanTimer:3.0f];
     }else{
 #ifdef SUPPORT_SDK2
-        [self.centralManager scanForPeripheralsWithServices:@[self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid, self.neoPen5SystemServiceUuid]
+        NSArray *searchPeripherals = @[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid, self.neoPen5SystemServiceUuid];
+        [self.centralManager scanForPeripheralsWithServices:searchPeripherals
                                                     options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
 #else
         [self.centralManager scanForPeripheralsWithServices:@[self.neoSystemServiceUuid]
@@ -767,13 +768,14 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
         
         // if the peripheral has no pen service --> ignore the peripheral
 #ifdef SUPPORT_SDK2
-        if(!([serviceUUIDs containsObject:self.neoPen2ServiceUuid] || [serviceUUIDs containsObject:self.neoPenServiceUuid] || [serviceUUIDs containsObject:self.neoPen5ServiceUuid])) return;
+//        NSArray *searchPeripherals = @[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid, self.neoPen5SystemServiceUuid];
+        if(!([serviceUUIDs containsObject:self.neoPen2ServiceUuid] || [serviceUUIDs containsObject:self.neoPenServiceUuid]
+             | [serviceUUIDs containsObject:self.neoPen5ServiceUuid]) || [serviceUUIDs containsObject:self.neoPen2SystemServiceUuid] ) return;
         
 #else
         if(![serviceUUIDs containsObject:self.neoPenServiceUuid]) return;
 #endif
         
-        NSLog(@"found service 18F1 or 19F1");
         if (![self.discoveredPeripherals containsObject:peripheral]) {
             [self.discoveredPeripherals addObject:peripheral];
             [self.rssiArray addObject:RSSI];
@@ -788,8 +790,13 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
                 [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen5ServiceUuid]];
                 NSLog(@"found service %@", self.neoPen5ServiceUuid);
             } else {
-                [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2ServiceUuid]];
-                NSLog(@"found service 19F1");
+                if ([serviceUUIDs containsObject:self.neoPen2ServiceUuid])  {
+                    [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2ServiceUuid]];
+                } else {
+                    [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2SystemServiceUuid]];
+                }
+ 
+                NSLog(@"found service 19F1 or 19F0");
             }
 #else
             [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPenServiceUuid]];
@@ -802,12 +809,14 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
     } else {
         // if the peripheral has no pen service --> ignore the peripheral
 #ifdef SUPPORT_SDK2
-        if(!([serviceUUIDs containsObject:self.neoSystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen2SystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen5SystemServiceUuid])) return;
+//        NSArray *searchPeripherals = @[self.neoPen2ServiceUuid, self.neoPen2SystemServiceUuid, self.neoSystemServiceUuid, self.neoPen5SystemServiceUuid];
+        
+        if(!([serviceUUIDs containsObject:self.neoSystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen2SystemServiceUuid] ||
+             [serviceUUIDs containsObject:self.neoPen5SystemServiceUuid] || [serviceUUIDs containsObject:self.neoPen2ServiceUuid] )) return;
 #else
         if(![serviceUUIDs containsObject:self.neoSystemServiceUuid]) return;
 #endif
         
-        NSLog(@"found service 18F5 or 19F0");
         if (![self.discoveredPeripherals containsObject:peripheral]) {
             [self.discoveredPeripherals addObject:peripheral];
             [self.rssiArray addObject:RSSI];
@@ -821,8 +830,13 @@ NSString * NJPenBatteryLowWarningNotification = @"NJPenBatteryLowWarningNotifica
                     [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen5SystemServiceUuid]];
                     NSLog(@"found service %@", self.neoPen5SystemServiceUuid);
             } else {
-                [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2SystemServiceUuid]];
-                NSLog(@"found service %@", self.neoPen2SystemServiceUuid);
+                if ([serviceUUIDs containsObject:self.neoPen2SystemServiceUuid])  {
+                    [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2SystemServiceUuid]];
+                } else {
+                    [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoPen2ServiceUuid]];
+                }
+                
+                NSLog(@"found service %@ or %@", self.neoPen2SystemServiceUuid, self.neoPen2ServiceUuid);
             }
 #else
             [self.serviceIdArray addObject:[NSString stringWithFormat:@"%@", self.neoSystemServiceUuid]];
