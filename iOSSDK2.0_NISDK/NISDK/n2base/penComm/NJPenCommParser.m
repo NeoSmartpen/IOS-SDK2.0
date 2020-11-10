@@ -3074,7 +3074,7 @@ static int length4Speed;
     memset(appVer, 0, sizeof(appVer));
     NSString *inputStr = [MyFunctions appVersion];;
     NSData *stringData = [inputStr dataUsingEncoding:NSUTF8StringEncoding];
-    memcpy(appVer, [stringData bytes], sizeof(stringData));
+    memcpy(appVer, [stringData bytes], [stringData length]);
     [tempPacketData appendBytes:&appVer length:sizeof(appVer)];
     
     unsigned char *tempDataBytes = (unsigned char *)[tempPacketData bytes];
