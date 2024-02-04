@@ -22,6 +22,12 @@ Click the link below to view a beginners guide to Ncode technology.
 ## Supported models
 - Neo smartpen N2(F110, F120)
 - Neo smartpen M1(F50)
+- Neo smartpen M1+(F51)
+- Neo smartpen DIMO(F30)
+- Neo smartpen LAMY_safari(F80)
+- Neo smartpen A1(F151)
+- Neo smartpen R1(F40)
+- 
 
 ## SDK Structure
 
@@ -55,7 +61,7 @@ For commercial use, it is not necessary or required to open up your source code.
 
 Please contact our support team via email for the terms and conditions of this license. 
 
-- Global: _global1@neolab.net
+- Global: global@neolab.net
 - Korea: _biz1@neolab.net
 
 Feel free to leave any comment or feedback [here](https://github.com/NeoSmartpen/IOS-SDK2.0/issues)
